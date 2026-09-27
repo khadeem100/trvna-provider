@@ -14,7 +14,7 @@
     <string>manual</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.trvna.provider</key>
+        <key>nl.trvna.provider</key>
         <string>TRVNA Provider AppStore</string>
     </dict>
 </dict>

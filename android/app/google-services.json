@@ -7,12 +7,41 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1064854756293:android:c0a57d0000000001",
-        "android_client_info": { "package_name": "com.trvna.provider" }
+        "mobilesdk_app_id": "1:1064854756293:android:ee8cc22cbec9b5ad5dc9ac",
+        "android_client_info": {
+          "package_name": "com.trvna.customer"
+        }
       },
       "oauth_client": [],
-      "api_key": [{ "current_key": "AIzaSyAntC8zr36il9w516BcDclKrkmlTynF_1Y" }],
-      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOw8fwtkoInQoR7uSCRh3c-MtxwktPXs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064854756293:android:2b47026a6de424145dc9ac",
+        "android_client_info": {
+          "package_name": "com.trvna.provider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOw8fwtkoInQoR7uSCRh3c-MtxwktPXs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
