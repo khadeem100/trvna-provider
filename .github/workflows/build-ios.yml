@@ -74,11 +74,18 @@ jobs:
         run: |
           mkdir -p "$HOME/.appstoreconnect/private_keys"
           printf '%s\n' "$APP_STORE_CONNECT_API_KEY_P8" > "$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_API_KEY_ID}.p8"
+          set +e
           xcrun altool --upload-app \
             --type ios \
             --file build/ios/ipa/*.ipa \
             --apiKey "$APP_STORE_CONNECT_API_KEY_ID" \
-            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" \
+            2>&1 | tee "$RUNNER_TEMP/altool.log"
+          code=${PIPESTATUS[0]}
+          if grep -q "UPLOAD FAILED" "$RUNNER_TEMP/altool.log"; then
+            exit 1
+          fi
+          exit "$code"
 
       - name: Upload IPA artifact
         if: always()
