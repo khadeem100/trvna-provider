@@ -1,0 +1,19 @@
+{
+  "project_info": {
+    "project_number": "1064854756293",
+    "project_id": "trvna-f36e0",
+    "storage_bucket": "trvna-f36e0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064854756293:android:c0a57d0000000001",
+        "android_client_info": { "package_name": "com.trvna.provider" }
+      },
+      "oauth_client": [],
+      "api_key": [{ "current_key": "AIzaSyAntC8zr36il9w516BcDclKrkmlTynF_1Y" }],
+      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+    }
+  ],
+  "configuration_version": "1"
+}
