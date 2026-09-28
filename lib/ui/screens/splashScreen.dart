@@ -111,6 +111,8 @@ class SplashScreenState extends State<SplashScreen> {
       value: SystemUiOverlayStyle(
         statusBarColor: AppColors.splashScreenGradientTopColor,
         systemNavigationBarColor: AppColors.splashScreenGradientBottomColor,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
         body: BlocConsumer<FetchSystemSettingsCubit, FetchSystemSettingsState>(
@@ -262,24 +264,18 @@ class SplashScreenState extends State<SplashScreen> {
                 },
                 child: Stack(
                   children: [
-                    CustomContainer(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.splashScreenGradientTopColor,
-                          AppColors.splashScreenGradientBottomColor,
-                        ],
-                        stops: [0, 1],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                      width: MediaQuery.sizeOf(context).width,
-                      height: context.screenHeight,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 10,
-                      ),
-                      child: const Center(
-                        child: CustomSvgPicture(svgImage: AppAssets.splashLogo),
+                    ColoredBox(
+                      color: AppColors.splashScreenGradientTopColor,
+                      child: ClipRect(
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: context.screenHeight,
+                          child: Image.asset(
+                            AppAssets.splashLogo,
+                            fit: BoxFit.fitHeight,
+                            alignment: Alignment.centerLeft,
+                          ),
+                        ),
                       ),
                     ),
                     if (showCompanyLogoOnSplash)

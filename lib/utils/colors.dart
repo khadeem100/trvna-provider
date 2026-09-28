@@ -48,8 +48,8 @@ extension AppColors on ColorScheme {
       : Colors.white.withValues(alpha: 0.7);
 
   //splashScreen GradientColor
-  static Color splashScreenGradientTopColor = const Color(0xff2050D2);
-  static Color splashScreenGradientBottomColor = const Color(0xff143386);
+  static Color splashScreenGradientTopColor = const Color(0xffF6F4F1);
+  static Color splashScreenGradientBottomColor = const Color(0xffF6F4F1);
 
   //screen GradientsColor
   static Color darkgradientBottomColor = const Color(0xff1E1E2C);

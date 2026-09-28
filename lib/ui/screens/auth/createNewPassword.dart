@@ -188,11 +188,15 @@ class _CreateNewPasswordState extends State<CreateNewPassword> {
                 Column(
                   children: [
                     const SizedBox(height: 40),
-                    const CustomSvgPicture(
-                      svgImage: AppAssets.loginLogo,
-                      width: 100,
-                      height: 108,
-                      boxFit: BoxFit.cover,
+                    SizedBox(
+                      width: 220,
+                      height: 150,
+                      child: Image.asset(
+                        Theme.of(context).brightness == Brightness.light
+                            ? AppAssets.loginLogo
+                            : AppAssets.loginLogoDark,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                     const SizedBox(height: 40),
                     _buildHeading(),

@@ -31,7 +31,7 @@ class LanguageDataCubit extends Cubit<LanguageDataState> {
   Future<Map<String, dynamic>> _loadFallbackEnglishData() async {
     try {
       final String jsonString = await rootBundle.loadString(
-        'assets/languages/en.json',
+        'assets/languages/nl.json',
       );
       return json.decode(jsonString) as Map<String, dynamic>;
     } catch (e) {
@@ -43,10 +43,10 @@ class LanguageDataCubit extends Cubit<LanguageDataState> {
   /// Creates fallback English language object
   AppLanguage _createFallbackEnglishLanguage() {
     return const AppLanguage(
-      id: 'en_fallback',
-      languageCode: 'en',
-      languageName: 'English',
-      imageURL: 'assets/images/english-au.svg',
+      id: 'nl_fallback',
+      languageCode: 'nl',
+      languageName: 'Dutch',
+      imageURL: '',
       isRtl: '0',
       isDefault: true,
     );

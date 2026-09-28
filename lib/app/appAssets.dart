@@ -4,8 +4,9 @@ abstract class AppAssets {
 
   // Branding assets
 
-  static const String loginLogo = "$_brandingAssetsPath/loginlogo.svg";
-  static const String splashLogo = "$_brandingAssetsPath/splashLogo.svg";
+  static const String loginLogo = "$_brandingAssetsPath/trvna_logo_green.png";
+  static const String loginLogoDark = "$_brandingAssetsPath/trvna_logo_white.png";
+  static const String splashLogo = "$_brandingAssetsPath/splash.png";
   static const String wrteamLogo = "$_brandingAssetsPath/wrteam_logo.svg";
   static const String placeholder = "$_brandingAssetsPath/placeholder.svg";
   static const String noImageFound = "$_brandingAssetsPath/noImageFound.svg";

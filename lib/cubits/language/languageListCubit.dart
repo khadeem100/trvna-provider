@@ -28,10 +28,10 @@ class LanguageListCubit extends Cubit<LanguageListState> {
   /// Creates a fallback English language using local en.json file
   AppLanguage _createFallbackEnglishLanguage() {
     return const AppLanguage(
-      id: 'en_fallback',
-      languageCode: 'en',
-      languageName: 'English',
-      imageURL: 'assets/images/english-au.svg',
+      id: 'nl_fallback',
+      languageCode: 'nl',
+      languageName: 'Dutch',
+      imageURL: '',
       isRtl: '0',
       isDefault: true,
     );
