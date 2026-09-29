@@ -67,7 +67,7 @@ jobs:
           packageName: com.trvna.provider
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: production
-          status: completed
+          status: draft
 
       - name: Upload AAB artifact
         if: always()
