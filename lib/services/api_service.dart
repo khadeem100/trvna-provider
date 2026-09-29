@@ -118,6 +118,22 @@ class ApiServices {
           return apiData;
         }
       } catch (e) {
+        if (e is DioException && e.response?.statusCode == 401 && isToken == true) {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          final hadToken = pref.getString(session.accessToken);
+          if (hadToken != null && hadToken.isNotEmpty) {
+            await pref.remove(session.accessToken);
+            await pref.remove(session.user);
+            await pref.remove(session.token);
+            await pref.setBool(session.isLogin, false);
+            userModel = null;
+            apiData.message = "Session expired";
+            apiData.isSuccess = false;
+            apiData.data = 0;
+            NavigationService.pushNamedAndRemoveUntil(routeName.loginProvider);
+            return apiData;
+          }
+        }
         apiData = await dioException(e);
         log("apiData  $apiName df:$apiData");
         return apiData;

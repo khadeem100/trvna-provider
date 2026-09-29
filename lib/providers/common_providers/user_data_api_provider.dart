@@ -699,7 +699,7 @@ class UserDataApiProvider extends ChangeNotifier {
       } else {
         if (!isLoadMore) booking.bookingList = [];
         booking.hasMoreData = false;
-        if (context.mounted) {
+        if (context.mounted && response.message != "Session expired") {
           showErrorToast(context, "Failed to fetch bookings");
         }
         isLoadingForBookingHistory = false;
