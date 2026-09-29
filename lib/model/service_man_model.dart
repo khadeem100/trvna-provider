@@ -22,6 +22,7 @@ class ServicemanModel {
   String? updatedAt;
   String? deletedAt;
   String? reviewRatings;
+  int? isOnline;
   PrimaryAddress? primaryAddress;
   List<Media>? media;
   WalletModel? wallet;
@@ -63,7 +64,8 @@ class ServicemanModel {
       this.addresses,
       this.reviews,
       this.servicemanReviews,
-      this.userDocuments});
+      this.userDocuments,
+      this.isOnline});
 
   ServicemanModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -89,6 +91,9 @@ class ServicemanModel {
     deletedAt = json['deleted_at'];
     reviewRatings = json['review_ratings'] != null
         ? json['review_ratings'].toString()
+        : null;
+    isOnline = json['is_online'] != null
+        ? int.tryParse(json['is_online'].toString())
         : null;
     primaryAddress = json['primary_address'] != null
         ? PrimaryAddress.fromJson(json['primary_address'])
@@ -169,6 +174,7 @@ class ServicemanModel {
     data['updated_at'] = updatedAt;
     data['deleted_at'] = deletedAt;
     data['review_ratings'] = reviewRatings;
+    data['is_online'] = isOnline;
     if (primaryAddress != null) {
       data['primary_address'] = primaryAddress!.toJson();
     }

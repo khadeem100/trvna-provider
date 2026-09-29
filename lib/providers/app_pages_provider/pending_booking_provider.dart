@@ -15,6 +15,11 @@ class PendingBookingProvider with ChangeNotifier {
   final GlobalKey<FormState> amountFormKey = GlobalKey<FormState>();
 
   bool isServicemen = false, isAmount = false, isNotify = false;
+  bool isAssigningNow = false;
+  String? _pendingStatus;
+
+  String get displayStatus =>
+      _pendingStatus ?? bookingModel?.bookingStatus?.slug ?? '';
 
   onReady(context) {
     isLoading = true;
@@ -240,5 +245,113 @@ class PendingBookingProvider with ChangeNotifier {
     loading = true;
     updateStatus(context, bookingModel!.id,
         isServiceAssgn: bookingModel!.servicemen!.isEmpty ? false : true);
+  }
+
+  showAssignDialog(BuildContext context) {
+    final bookingId = bookingModel?.id;
+    if (bookingId == null) return;
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          final nav = Navigator.of(ctx);
+          if (isFreelancer) {
+            return AppAlertDialogCommon(
+                height: Sizes.s100,
+                title: translations?.assignToMe ?? "Assign to Me",
+                image: eImageAssets.assignMe,
+                subtext: translations?.areYouSureYourself ??
+                    "Assign to yourself?",
+                firstBText: translations?.cancel ?? "Cancel",
+                secondBText: translations?.yes ?? "Yes",
+                firstBTap: () => nav.pop(),
+                secondBTap: () {
+                  nav.pop();
+                  _assignToSelf(bookingId, nav);
+                });
+          }
+          return AlertDialogCommon(
+              isTwoButton: true,
+              title: translations?.assignBooking ?? "Assign Booking",
+              image: eGifAssets.dateGif,
+              subtext: translations?.doYouWant ?? "How to assign?",
+              firstBText: translations?.assignToMe ?? "Assign to Me",
+              secondBText:
+                  translations?.assignToServicemen ?? "Assign to Servicemen",
+              height: Sizes.s145,
+              firstBTap: () {
+                nav.pop();
+                isAssigningNow = true;
+                notifyListeners();
+                _assignToSelf(bookingId, nav);
+              },
+              secondBTap: () {
+                nav.pop();
+                nav.pushNamed(routeName.bookingServicemenList, arguments: {
+                  "servicemen": bookingModel?.requiredServicemen ?? 1,
+                  "data": bookingModel,
+                }).then((result) {
+                  if (result != null) {
+                    final serviceman =
+                        (result as List).cast<ServicemanModel>();
+                    final ids = serviceman.map((d) => d.id).toList();
+                    _assignToServicemen(bookingId, ids, nav);
+                  }
+                });
+              });
+        });
+  }
+
+  Future<void> _assignToSelf(int bookingId, NavigatorState nav) async {
+    try {
+      showLoading(nav.context);
+      final body = {
+        "booking_id": bookingId,
+        "servicemen_ids": [userModel!.id],
+      };
+      final result = await apiServices.postApi(
+        api.assignBooking,
+        body,
+        isToken: true,
+        isData: true,
+      );
+      hideLoading(nav.context);
+      createBookingNotification(NotificationType.updateBookingStatusEvent);
+      nav.pushNamed(routeName.assignBooking, arguments: bookingId);
+      if (result.isSuccess != true) {
+        snackBarMessengers(nav.context, message: result.message);
+      }
+    } catch (e) {
+      try {
+        hideLoading(nav.context);
+      } catch (_) {}
+    } finally {
+      isAssigningNow = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> _assignToServicemen(
+      int bookingId, List ids, NavigatorState nav) async {
+    try {
+      showLoading(nav.context);
+      final body = {"booking_id": bookingId, "servicemen_ids": ids};
+      final result = await apiServices.postApi(
+        api.assignBooking,
+        body,
+        isToken: true,
+        isData: true,
+      );
+      hideLoading(nav.context);
+      createBookingNotification(NotificationType.updateBookingStatusEvent);
+      createBookingNotification(NotificationType.assignBooking);
+      nav.pushNamed(routeName.assignBooking, arguments: bookingId);
+      if (result.isSuccess != true) {
+        snackBarMessengers(nav.context, message: result.message);
+      }
+    } catch (e) {
+      try {
+        hideLoading(nav.context);
+      } catch (_) {}
+    }
   }
 }

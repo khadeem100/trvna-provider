@@ -8,6 +8,7 @@ import '../config.dart';
 String apiUrl = "https://trvna.com/api";
 String paymentUrl = "https://trvna.com"; //
 String providerAppUrl = "https://play.google.com/store/apps/details?id=com.trvna.provider";
+String googleMapKey = "AIzaSyBGX510jFcJhRZ87hYcyp84l9LuWaHnFok";
 // Global SharedPreferences and Locale
 late SharedPreferences sharedPreferences;
 String local = appSettingModel!.general!.defaultLanguage!.locale!;

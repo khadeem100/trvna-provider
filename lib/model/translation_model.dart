@@ -713,6 +713,10 @@ class Translation {
   String? optional;
   String? updateCompanyDetails;
   String? verifyAccountToCreateService;
+  String? customerInstructions;
+  String? serviceAssignedToYou;
+  String? currentlyHandlingService;
+  String? serviceDoneByYou;
 
   Translation({
     this.boostNowSeeYourBusinessGrow,
@@ -1425,6 +1429,10 @@ class Translation {
     this.optional,
     this.updateCompanyDetails,
     this.verifyAccountToCreateService,
+    this.customerInstructions,
+    this.serviceAssignedToYou,
+    this.currentlyHandlingService,
+    this.serviceDoneByYou,
   });
 
   Translation.fromJson(Map<String, dynamic> json, context) {
@@ -2158,6 +2166,13 @@ class Translation {
     optional = json['optional'];
     updateCompanyDetails = json['updateCompanyDetails'];
     verifyAccountToCreateService = json['verifyAccountToCreateService'];
+    customerInstructions =
+        json['customerInstructions'] ?? "Customer Instructions";
+    serviceAssignedToYou =
+        json['serviceAssignedToYou'] ?? "Service assigned to you";
+    currentlyHandlingService =
+        json['currentlyHandlingService'] ?? "Currently handling service";
+    serviceDoneByYou = json['serviceDoneByYou'] ?? "Service done by you";
   }
 
   Map<String, dynamic> toJson() {
@@ -2878,6 +2893,10 @@ class Translation {
     data['optional'] = optional;
     data['updateCompanyDetails'] = updateCompanyDetails;
     data['verifyAccountToCreateService'] = verifyAccountToCreateService;
+    data['customerInstructions'] = customerInstructions;
+    data['serviceAssignedToYou'] = serviceAssignedToYou;
+    data['currentlyHandlingService'] = currentlyHandlingService;
+    data['serviceDoneByYou'] = serviceDoneByYou;
     return data;
   }
 
@@ -3581,6 +3600,10 @@ class Translation {
       youCanContact:
           "You can contact us by phone or email to receive any type of help 24 hours a day.",
       appDetails: "App Details",
+      customerInstructions: "Customer Instructions",
+      serviceAssignedToYou: "Service assigned to you",
+      currentlyHandlingService: "Currently handling service",
+      serviceDoneByYou: "Service done by you",
     );
   }
 }

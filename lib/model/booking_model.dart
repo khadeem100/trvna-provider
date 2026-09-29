@@ -23,6 +23,7 @@ class BookingModel {
   int? totalExtraServicemen;
   int? totalServicemen;
   int? requiredServicemen;
+  int? quantity;
   int? perServicemanCommission;
   dynamic totalExtraServicemenCharge;
   dynamic couponTotalDiscount;
@@ -55,6 +56,7 @@ class BookingModel {
   List<ServiceProofs>? serviceProofs;
   List<AdditionalServices>? additionalServices;
   ExtraChargesTotal? extraChargesTotal;
+  List<String>? carPlateNumbers;
   List<Tax>? taxes;
   ZoomMeeting? zoomMeeting;
   double? advancePaymentAmount;
@@ -85,6 +87,8 @@ class BookingModel {
       this.totalExtraServicemen,
       this.totalServicemen,
       this.requiredServicemen,
+      this.quantity,
+      this.carPlateNumbers,
       this.perServicemanCommission,
       this.totalExtraServicemenCharge,
       this.couponTotalDiscount,
@@ -189,6 +193,13 @@ class BookingModel {
     invoiceUrl = json['invoice_url'];
     createdById = json['created_by_id'];
     requiredServicemen = json['required_servicemen'];
+    quantity = json['quantity'] != null
+        ? int.tryParse(json['quantity'].toString()) ?? 1
+        : 1;
+    if (json['car_plate_numbers'] != null && json['car_plate_numbers'] is List) {
+      carPlateNumbers = List<String>.from(
+          (json['car_plate_numbers'] as List).map((e) => e.toString()));
+    }
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
@@ -353,6 +364,10 @@ class BookingModel {
     if (extraChargesTotal != null) {
       data['extra_charges_total'] = extraChargesTotal!.toJson();
     }
+    data['quantity'] = quantity;
+    if (carPlateNumbers != null) {
+      data['car_plate_numbers'] = carPlateNumbers;
+    }
     return data;
   }
 }
@@ -460,6 +475,11 @@ class BookingAddress {
   dynamic area;
   String? address;
   String? postalCode;
+  String? latitude;
+  String? longitude;
+  String? alternativeName;
+  int? alternativePhone;
+  String? code;
 
   BookingAddress({
     this.country,
@@ -467,6 +487,11 @@ class BookingAddress {
     this.area,
     this.address,
     this.postalCode,
+    this.latitude,
+    this.longitude,
+    this.alternativeName,
+    this.alternativePhone,
+    this.code,
   });
 
   factory BookingAddress.fromJson(Map<String, dynamic> json) => BookingAddress(
@@ -476,6 +501,13 @@ class BookingAddress {
         area: json["area"],
         address: json["address"],
         postalCode: json["postal_code"],
+        latitude: json["latitude"]?.toString(),
+        longitude: json["longitude"]?.toString(),
+        alternativeName: json["alternative_name"]?.toString(),
+        alternativePhone: json["alternative_phone"] != null
+            ? int.tryParse(json["alternative_phone"].toString())
+            : null,
+        code: json["code"]?.toString(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -483,7 +515,12 @@ class BookingAddress {
         "state": state?.toJson(),
         "area": area,
         "address": address,
-        "postal_code": postalCode
+        "postal_code": postalCode,
+        "latitude": latitude,
+        "longitude": longitude,
+        "alternative_name": alternativeName,
+        "alternative_phone": alternativePhone,
+        "code": code,
       };
 }
 

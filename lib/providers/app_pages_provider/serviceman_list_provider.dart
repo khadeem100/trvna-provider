@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fixit_provider/config.dart';
+import 'package:fixit_provider/utils/toast_utils.dart';
 
 class ServicemanListProvider with ChangeNotifier {
   double widget1Opacity = 0.0;
@@ -171,6 +172,26 @@ class ServicemanListProvider with ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  Future<void> toggleServicemanAvailability(
+      BuildContext context, int servicemanId, bool makeOnline) async {
+    final body = {
+      "serviceman_id": servicemanId,
+      "is_online": makeOnline ? 1 : 0
+    };
+    await apiServices
+        .postApi(api.servicemanAvailability, body, isToken: true)
+        .then((value) {
+      if (value.isSuccess == true) {
+        final idx = servicemanList.indexWhere((s) => s.id == servicemanId);
+        if (idx != -1) servicemanList[idx].isOnline = makeOnline ? 1 : 0;
+        final sIdx = searchList.indexWhere((s) => s.id == servicemanId);
+        if (sIdx != -1) searchList[sIdx].isOnline = makeOnline ? 1 : 0;
+        notifyListeners();
+        showToast(context, value.message ?? "", type: "success");
+      }
+    });
   }
 
   onBack(context, isBack) {

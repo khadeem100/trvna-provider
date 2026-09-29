@@ -53,6 +53,8 @@ class ApiMethods {
   String addServiceAddress = '$apiUrl/addServiceAddress';
   String deleteServiceAddress = '$apiUrl/deleteServiceAddress';
   String assignBooking = '$apiUrl/booking/assign';
+  String reassignBooking = '$apiUrl/booking/reassign';
+  String servicemanAvailability = '$apiUrl/serviceman/availability';
   String generateZoomMeeting = '$apiUrl/generateZoomMeeting';
   String servicePackage = '$apiUrl/service-package';
   String uploadProviderDocument = '$apiUrl/upload-provider-document';

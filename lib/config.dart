@@ -31,6 +31,7 @@ export 'package:fixit_provider/services/common_list_services.dart';
 
 export '../helper/alert_class.dart';
 export 'package:fixit_provider/model/index.dart';
+export 'package:fixit_provider/widgets/translated_text.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
