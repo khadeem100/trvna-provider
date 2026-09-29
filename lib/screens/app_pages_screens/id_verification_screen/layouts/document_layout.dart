@@ -16,7 +16,7 @@ class DocumentLayout extends StatelessWidget {
               data!.media!.isNotEmpty &&
               data!.media![0].originalUrl!.contains("http")
           ? CachedNetworkImage(
-              imageUrl: data!.media![0].originalUrl!,
+              imageUrl: data!.media!.first.originalUrl!,
               imageBuilder: (context, imageProvider) => Container(
                   height: Sizes.s160,
                   width: MediaQuery.of(context).size.width,
@@ -45,50 +45,44 @@ class DocumentLayout extends StatelessWidget {
                   shape: SmoothRectangleBorder(
                       borderRadius: SmoothBorderRadius(
                           cornerRadius: 8, cornerSmoothing: 1)))),
-
       const VSpace(Sizes.s12),
-      
-      Column(
-        children: [
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(language(context, appFonts.identityNo)),
-              Text(data!.identityNo ??"")
-            ],
-          ),
-          const VSpace(Sizes.s12),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: [
-              if (language(context, data!.status) ==
-                  language(context, appFonts.requestForUpdate))
-                Icon(CupertinoIcons.checkmark_alt_circle_fill,
-                    color: appColor(context).appTheme.online, size: Sizes.s18),
-              if (language(context, data!.status) ==
-                  language(context, appFonts.requestForUpdate))
-                const HSpace(Sizes.s5),
-              Text(language(context, data!.document!.title!),
-                  style: appCss.dmDenseMedium14
-                      .textColor(appColor(context).appTheme.darkText))
-            ]).expanded(),
-            language(context, data!.status) != language(context, appFonts.pending)
-                ? Row(children: [
-                    Text(language(context, "${data!.status}"),
-                        style: appCss.dmDenseMedium12
-                            .textColor(appColor(context).appTheme.primary)),
-                    const HSpace(Sizes.s5),
-                    SvgPicture.asset(eSvgAssets.anchorArrowRight,
-                        colorFilter: ColorFilter.mode(
-                            appColor(context).appTheme.primary, BlendMode.srcIn))
-                  ])
-                : Text(
-                    language(context, "\u2022 ${language(context, data!.status)}"),
-                    style: appCss.dmDenseMedium12
-                        .textColor(appColor(context).appTheme.red))
-          ])
-        ],
-      ).paddingAll(Insets.i15).boxBorderExtension(context,
+      Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(language(context, translations!.identityNo)),
+            Text(data!.identityNo ?? "")
+          ],
+        ),
+        const VSpace(Sizes.s12),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(children: [
+            if (language(context, data!.status) ==
+                language(context, translations!.requestForUpdate))
+              Icon(CupertinoIcons.checkmark_alt_circle_fill,
+                  color: appColor(context).appTheme.online, size: Sizes.s18),
+            if (language(context, data!.status) ==
+                language(context, translations!.requestForUpdate))
+              const HSpace(Sizes.s5),
+            Text(language(context, data!.document),
+                style: appCss.dmDenseMedium14
+                    .textColor(appColor(context).appTheme.darkText))
+          ]).expanded(),
+          language(context, data!.status) !=
+                  language(context, translations!.pending)
+              ? Row(children: [
+                  Text(language(context, "${data!.status}"),
+                      style: appCss.dmDenseMedium12
+                          .textColor(appColor(context).appTheme.primary)),
+                  const HSpace(Sizes.s5)
+                ])
+              : Text(
+                  language(
+                      context, "\u2022 ${language(context, data!.status)}"),
+                  style: appCss.dmDenseMedium12
+                      .textColor(appColor(context).appTheme.red))
+        ])
+      ]).paddingAll(Insets.i15).boxBorderExtension(context,
           radius: AppRadius.r10, bColor: appColor(context).appTheme.stroke),
     ])
         .paddingAll(Insets.i12)

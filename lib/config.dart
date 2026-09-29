@@ -24,7 +24,7 @@ export '../widgets/common_state.dart';
 export '../common/extension/spacing.dart';
 export '../common/theme/app_css.dart';
 export '../common/extension/widget_extension.dart';
-export '../../routes/screen_list.dart';
+export 'package:fixit_provider/routes/screen_list.dart';
 export '../common/theme/theme_service.dart';
 export '../utils/general_utils.dart';
 export 'package:fixit_provider/services/common_list_services.dart';

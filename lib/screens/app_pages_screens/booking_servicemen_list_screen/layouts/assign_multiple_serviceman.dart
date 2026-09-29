@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../config.dart';
 
 class AssignMultipleServiceman extends StatelessWidget {
@@ -6,40 +8,55 @@ class AssignMultipleServiceman extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialogCommon(
-        title: appFonts.assignToServicemen,
-        subtext: appFonts.areYouSureServicemen,
-        isBooked: true,
-        isTwoButton: true,
-        widget: Container(
-            alignment: Alignment.bottomCenter,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            child: Stack(alignment: Alignment.topRight, children: [
-              Image.asset(eImageAssets.assignServicemen,
-                  height: Sizes.s145, width: Sizes.s130),
-              SizedBox(
-                  height: Sizes.s34,
-                  width: Sizes.s34,
-                  child: Image.asset(eGifAssets.tick,
-                      height: Sizes.s34, width: Sizes.s34))
-                  .paddingOnly(top: Insets.i30)
-            ]))
-            .paddingOnly(top: Insets.i15)
-            .decorated(
-            color: appColor(context).appTheme.fieldCardBg,
-            borderRadius: BorderRadius.circular(AppRadius.r10)),
-        height: Sizes.s145,
-        firstBText: appFonts.cancel,
-        firstBTap: () => route.pop(context),
-        secondBText: appFonts.yes,
-        secondBTap: () {
-          route.pop(context);
+    return Consumer<BookingServicemenListProvider>(builder: (context, value, child) {
+      return AlertDialogCommon(
+          isLoading: value.isAssignLoading,
+          title: translations!.assignToServicemen,
+          subtext: translations!.areYouSureServicemen,
+          isBooked: true,
+          isTwoButton: true,
+          widget: Container(
+              alignment: Alignment.bottomCenter,
+              width: MediaQuery.of(context).size.width,
+              child: Stack(alignment: Alignment.topRight, children: [
+                Image.asset(eImageAssets.assignServicemen,
+                    height: Sizes.s145, width: Sizes.s130),
+                SizedBox(
+                    height: Sizes.s34,
+                    width: Sizes.s34,
+                    child: Image.asset(eGifAssets.tick,
+                        height: Sizes.s34, width: Sizes.s34))
+                    .paddingOnly(top: Insets.i30)
+              ]))
+              .paddingOnly(top: Insets.i15)
+              .decorated(
+              color: appColor(context).appTheme.fieldCardBg,
+              borderRadius: BorderRadius.circular(AppRadius.r10)),
+          height: Sizes.s145,
+          firstBText: translations!.cancel,
+          firstBTap: () => route.pop(context),
+          secondBText: translations!.yes,
+          secondBTap: () async {
+            final service =
+            Provider.of<BookingServicemenListProvider>(context, listen: false);
+            service.isAssignLoading = true;
+            service.notifyListeners();
 
-          route.pop(context,arg: selectService);
+            // Capture the navigator BEFORE popping — reusing `context` for a
+            // second pop after the dialog route is gone targets a deactivated
+            // widget and silently fails, which is why assign needed 2 tries.
+            final navigator = Navigator.of(context);
 
-        });
+            await Future.delayed(const Duration(seconds: 1));
+
+            await createBookingNotification(
+                NotificationType.updateBookingStatusEvent);
+            await createBookingNotification(NotificationType.assignBooking);
+
+            navigator.pop();
+            navigator.pop(selectService);
+            log("AssignMultipleServiceman : $selectService");
+          });
+    });
   }
 }

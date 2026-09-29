@@ -15,7 +15,8 @@ class DeleteAccountAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context2, setState) {
-      return Consumer<DeleteDialogProvider>(builder: (context3, value, child) {
+      return Consumer2<DeleteDialogProvider, ProfileProvider>(
+          builder: (context3, value, profile, child) {
         return AlertDialog(
             insetPadding: const EdgeInsets.symmetric(horizontal: Insets.i20),
             contentPadding: EdgeInsets.zero,
@@ -26,50 +27,54 @@ class DeleteAccountAlert extends StatelessWidget {
             content: Stack(alignment: Alignment.topRight, children: [
               Column(mainAxisSize: MainAxisSize.min, children: [
                 // Gif
-                Stack(alignment: Alignment.topCenter, children: [
-                  Stack(alignment: Alignment.bottomCenter, children: [
-                    SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Stack(alignment: Alignment.center, children: [
-                              SizedBox(
-                                  height: Sizes.s180,
-                                  width: Sizes.s150,
-                                  child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      curve: isPositionedRight
-                                          ? Curves.bounceIn
-                                          : Curves.bounceOut,
-                                      alignment: isPositionedRight
-                                          ? isAnimateOver
-                                              ? Alignment.center
-                                              : Alignment.topCenter
-                                          : Alignment.centerLeft,
-                                      child: AnimatedContainer(
-                                          duration:
-                                              const Duration(milliseconds: 200),
-                                          height: isPositionedRight ? 88 : 13,
-                                          child: Image.asset(
-                                              eImageAssets.accountDel)))),
-                              Image.asset(eImageAssets.dustbin,
-                                  height: Sizes.s88, width: Sizes.s88)
-                            ]))
-                        .paddingOnly(top: 50)
-                        .decorated(
-                            color: appColor(context).appTheme.fieldCardBg,
-                            borderRadius: BorderRadius.circular(AppRadius.r10)),
-                  ]),
-                  if (offsetAnimation != null)
-                    SlideTransition(
-                        position: offsetAnimation!,
-                        child: (offsetAnimation != null &&
-                                isAnimateOver == true)
-                            ? Image.asset(eImageAssets.dustbinCover, height: 38)
-                            : const SizedBox())
-                ]),
+                Image.asset(
+                  eGifAssets
+                      .accountDelete, /* height: Sizes.s34, width: Sizes.s34 */
+                ),
+                // Stack(alignment: Alignment.topCenter, children: [
+                //   Stack(alignment: Alignment.bottomCenter, children: [
+                //     SizedBox(
+                //             width: MediaQuery.of(context).size.width,
+                //             child: Stack(alignment: Alignment.center, children: [
+                //               SizedBox(
+                //                   height: Sizes.s180,
+                //                   width: Sizes.s150,
+                //                   child: AnimatedContainer(
+                //                       duration:
+                //                           const Duration(milliseconds: 200),
+                //                       curve: isPositionedRight
+                //                           ? Curves.bounceIn
+                //                           : Curves.bounceOut,
+                //                       alignment: isPositionedRight
+                //                           ? isAnimateOver
+                //                               ? Alignment.center
+                //                               : Alignment.topCenter
+                //                           : Alignment.centerLeft,
+                //                       child: AnimatedContainer(
+                //                           duration:
+                //                               const Duration(milliseconds: 200),
+                //                           height: isPositionedRight ? 88 : 13,
+                //                           child: Image.asset(
+                //                               eImageAssets.accountDel)))),
+                //               Image.asset(eImageAssets.dustbin,
+                //                   height: Sizes.s88, width: Sizes.s88)
+                //             ]))
+                //         .paddingOnly(top: 50)
+                //         .decorated(
+                //             color: appColor(context).appTheme.fieldCardBg,
+                //             borderRadius: BorderRadius.circular(AppRadius.r10)),
+                //   ]),
+                //   if (offsetAnimation != null)
+                //     SlideTransition(
+                //         position: offsetAnimation!,
+                //         child: (offsetAnimation != null &&
+                //                 isAnimateOver == true)
+                //             ? Image.asset(eImageAssets.dustbinCover, height: 38)
+                //             : const SizedBox())
+                // ]),
                 // Sub text
                 const VSpace(Sizes.s15),
-                Text(language(context, appFonts.yourAccountWill),
+                Text(language(context, translations!.yourAccountWill),
                     textAlign: TextAlign.center,
                     style: appCss.dmDenseRegular14
                         .textColor(appColor(context).appTheme.lightText)
@@ -79,7 +84,7 @@ class DeleteAccountAlert extends StatelessWidget {
                   Expanded(
                       child: ButtonCommon(
                           onTap: () => route.pop(context),
-                          title: appFonts.cancel,
+                          title: translations!.cancel!,
                           borderColor: appColor(context).appTheme.red,
                           color: appColor(context).appTheme.whiteBg,
                           style: appCss.dmDenseSemiBold16
@@ -88,14 +93,17 @@ class DeleteAccountAlert extends StatelessWidget {
                   Expanded(
                       child: ButtonCommon(
                           color: appColor(context).appTheme.red,
-                          onTap: () => route.pop(context),
-                          title: appFonts.delete))
+                          onTap: () {
+                            profile.deleteAccount(context);
+                            route.pop(context);
+                          },
+                          title: translations!.delete!))
                 ])
               ]).padding(
                   horizontal: Insets.i20, top: Insets.i60, bottom: Insets.i20),
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 // Title
-                Text(language(context, appFonts.deleteAccount),
+                Text(language(context, translations!.deleteAccount),
                     style: appCss.dmDenseExtraBold18
                         .textColor(appColor(context).appTheme.darkText)),
                 Icon(CupertinoIcons.multiply,

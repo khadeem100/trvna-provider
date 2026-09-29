@@ -1,4 +1,4 @@
-import '../../../../config.dart';
+﻿import '../../../../config.dart';
 
 class CategoriesListLayout extends StatelessWidget {
   final CategoryModel? data;
@@ -13,12 +13,13 @@ class CategoriesListLayout extends StatelessWidget {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Row(children: [
         CachedNetworkImage(
-            imageUrl: data!.media![0].originalUrl!,
+            imageUrl: data!.media!.isNotEmpty
+                ? data!.media!.first.originalUrl.toString()
+                : '',
             imageBuilder: (context, imageProvider) => Image(
                 image: imageProvider,
                 fit: BoxFit.cover,
                 height: Sizes.s20,
-                color: appColor(context).appTheme.darkText,
                 width: Sizes.s20),
             errorWidget: (context, url, error) => Image.asset(
                 eImageAssets.noImageFound1,
@@ -27,11 +28,11 @@ class CategoriesListLayout extends StatelessWidget {
                 width: Sizes.s22)),
         const HSpace(Sizes.s15),
         Row(children: [
-          Text(language(context, data!.title),
+          TranslatedText(data?.title ?? "",
               style: appCss.dmDenseRegular14
                   .textColor(appColor(context).appTheme.darkText)),
           if (isCommission == true)
-            Text(language(context, " - ${data!.commission!}%"),
+            TranslatedText(" - ${data?.commission ?? "0"}%",
                 style: appCss.dmDenseRegular14
                     .textColor(appColor(context).appTheme.darkText))
         ])
@@ -48,3 +49,4 @@ class CategoriesListLayout extends StatelessWidget {
         .paddingOnly(bottom: Insets.i12);
   }
 }
+

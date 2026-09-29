@@ -14,13 +14,15 @@ class ServiceProofList extends StatelessWidget {
         ...bookingModel!.serviceProofs!.asMap().entries.map((a) =>
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text(a.value.title! + a.value.id.toString(),
-                    style: appCss.dmDenseblack16
-                        .textColor(appColor(context).appTheme.darkText)),
-                Text(language(context, appFonts.editProof),
+                SizedBox(width: 180,
+                  child: Text(a.value.title! + a.value.id.toString(),overflow: TextOverflow.fade,
+                      style: appCss.dmDenseblack12
+                          .textColor(appColor(context).appTheme.darkText)),
+                ),
+                Text(language(context, translations!.editProof),
                         style: appCss.dmDenseRegular14
                             .textColor(appColor(context).appTheme.primary))
-                    .inkWell(onTap: ()=>onTap!(a.value))
+                    .inkWell(onTap: () => onTap!(a.value))
               ]),
               const VSpace(Sizes.s10),
               SingleChildScrollView(
@@ -30,7 +32,7 @@ class ServiceProofList extends StatelessWidget {
                           .asMap()
                           .entries
                           .map((e) => CachedNetworkImage(
-                                imageUrl: e.value.originalUrl!,
+                                imageUrl: e.value.originalUrl ?? "",
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                         height: Sizes.s70,
@@ -68,9 +70,13 @@ class ServiceProofList extends StatelessWidget {
                     .paddingSymmetric(vertical: Insets.i20)
             ]))
       ],
-    ).paddingAll(Insets.i15).boxBorderExtension(context,
-        color: appColor(context).appTheme.fieldCardBg).paddingAll(Insets.i15).boxBorderExtension(context,
-        color: appColor(context).appTheme.whiteColor,
-        bColor: appColor(context).appTheme.stroke);
+    )
+        .paddingAll(Insets.i15)
+        .boxBorderExtension(context,
+            color: appColor(context).appTheme.fieldCardBg)
+        .paddingAll(Insets.i15)
+        .boxBorderExtension(context,
+            color: appColor(context).appTheme.whiteBg,
+            bColor: appColor(context).appTheme.stroke);
   }
 }

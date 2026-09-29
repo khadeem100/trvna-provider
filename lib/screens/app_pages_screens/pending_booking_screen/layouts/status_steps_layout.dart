@@ -4,7 +4,7 @@ import '../../../../config.dart';
 
 class StatusStepsLayout extends StatelessWidget {
   final BookingStatusLogs? data;
-  final int? index, selectIndex,id;
+  final int? index, selectIndex, id;
   final List? list;
 
   const StatusStepsLayout(
@@ -14,7 +14,7 @@ class StatusStepsLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        selectIndex == index
+        /* selectIndex == index
             ? DottedBorder(
                 color: appColor(context).appTheme.primary,
                 borderType: BorderType.RRect,
@@ -23,30 +23,32 @@ class StatusStepsLayout extends StatelessWidget {
                         height: 10,
                         width: 10,
                         decoration: BoxDecoration(
-                            color:appColor(context).appTheme.primary,
+                            color: appColor(context).appTheme.primary,
                             shape: BoxShape.circle))
                     .paddingAll(Insets.i1))
-            : Container(
-                height: 16,
-                width: 16,
-                decoration: BoxDecoration(
-                    color: appColor(context).appTheme.lightText,
-                    shape: BoxShape.circle),
-                child: Container(
-                        height: 12,
-                        width: 12,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: appColor(context).appTheme.whiteColor,
-                                width: 2),
-                            color: appColor(context).appTheme.lightText,
-                            shape: BoxShape.circle))
-                    .paddingAll(Insets.i1)),
+            :  */
+        Container(
+            height: 16,
+            width: 16,
+            decoration: BoxDecoration(
+                color: appColor(context).appTheme.lightText,
+                shape: BoxShape.circle),
+            child: Container(
+                    height: 12,
+                    width: 12,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: appColor(context).appTheme.whiteColor,
+                            width: 2),
+                        color: appColor(context).appTheme.lightText,
+                        shape: BoxShape.circle))
+                .paddingAll(Insets.i1)),
         SvgPicture.asset(eSvgAssets.anchorStatusArrow,
             colorFilter: ColorFilter.mode(
-                selectIndex == index
+                /*  selectIndex == index
                     ? appColor(context).appTheme.primary
-                    : appColor(context).appTheme.stroke,
+                    :  */
+                appColor(context).appTheme.stroke,
                 BlendMode.srcIn))
       ]),
       const HSpace(Sizes.s12),
@@ -56,14 +58,22 @@ class StatusStepsLayout extends StatelessWidget {
         IntrinsicHeight(
             child: Row(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(DateFormat("dd MM").format(DateTime.parse(data!.createdAt!)),
-                style: appCss.dmDenseMedium12
-                    .textColor(selectIndex == index
-                    ?  appColor(context).appTheme.darkText : appColor(context).appTheme.lightText )  ),
-            Text(DateFormat("hh:mm aa").format(DateTime.parse(data!.createdAt!)),
-                style:appCss.dmDenseMedium12
-                    .textColor(selectIndex == index
-                    ?  appColor(context).appTheme.darkText : appColor(context).appTheme.lightText ) )
+            Text(
+                DateFormat("dd MM")
+                    .format(DateTime.parse(data!.createdAt!).toLocal()),
+                style: appCss.dmDenseMedium12.textColor(
+                    /* selectIndex == index
+                    ? appColor(context).appTheme.darkText
+                    : */
+                    appColor(context).appTheme.lightText)),
+            Text(
+                DateFormat("hh:mm aa")
+                    .format(DateTime.parse(data!.createdAt!).toLocal()),
+                style: appCss.dmDenseMedium12.textColor(
+                    /* selectIndex == index
+                    ? appColor(context).appTheme.darkText
+                    : */
+                    appColor(context).appTheme.lightText))
           ]),
           VerticalDivider(
                   width: 1,

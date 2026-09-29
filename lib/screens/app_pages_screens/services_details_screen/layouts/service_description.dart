@@ -1,7 +1,7 @@
 import '../../../../config.dart';
 
 class ServiceDescription extends StatelessWidget {
-  final Services? services;
+  final dynamic services;
 
   const ServiceDescription({super.key, this.services});
 
@@ -9,12 +9,27 @@ class ServiceDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<ServiceDetailsProvider, LocationProvider>(
         builder: (context1, value, val, child) {
+      // log("services::${services.categories}");
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         DescriptionLayoutCommon(
-            icon: eSvgAssets.category,
-            title: appFonts.category,
-            subtitle: getCategoryName(services!.categories!))
-            .paddingSymmetric(horizontal: Insets.i25,vertical: Sizes.s17),
+                icon: eSvgAssets.category,
+                title: translations!.category,
+                subtitle: /* services!
+                        .categories */
+                    services!.categories!
+                            .map((cat) => "${cat['title']}")
+                            .join(', ') ??
+                        '')
+            .paddingSymmetric(horizontal: Insets.i25, vertical: Sizes.s17),
+        Container(
+            width: MediaQuery.of(context).size.width,
+            height: 1,
+            color: appColor(context).appTheme.stroke),
+        DescriptionLayoutCommon(
+                icon: eSvgAssets.mailBold,
+                title: translations?.serviceType,
+                subtitle: services!.type)
+            .paddingSymmetric(horizontal: Insets.i25, vertical: Sizes.s17),
         Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
@@ -23,7 +38,7 @@ class ServiceDescription extends StatelessWidget {
           Expanded(
               child: DescriptionLayoutCommon(
                   icon: eSvgAssets.clock,
-                  title: appFonts.duration,
+                  title: translations!.duration,
                   subtitle:
                       "${services!.duration ?? 1} ${services!.durationUnit ?? "hour"}")),
           Container(
@@ -33,9 +48,9 @@ class ServiceDescription extends StatelessWidget {
               .paddingSymmetric(horizontal: Insets.i20),
           Expanded(
               child: DescriptionLayoutCommon(
-              icon: eSvgAssets.tagUser,
-          title: appFonts.serviceman,
-          subtitle: "${services!.requiredServicemen ?? 1} servicemen"))
+                  icon: eSvgAssets.tagUser,
+                  title: translations!.serviceman,
+                  subtitle: "${services!.requiredServicemen ?? 1} servicemen"))
         ]).paddingSymmetric(horizontal: Insets.i25),
         Container(
             width: MediaQuery.of(context).size.width,
@@ -45,39 +60,41 @@ class ServiceDescription extends StatelessWidget {
           Expanded(
               child: DescriptionLayoutCommon(
                   icon: eSvgAssets.commission,
-                  title: appFonts.commission,
-                  subtitle: "30%")),
+                  title: translations!.adminCommission,
+                  isExpanded: true,
+                  subtitle:
+                      '${services.highestCommission}' /* "${etCategoryCommission(services!.categories!)}%" */)),
           Container(
-                  height: Sizes.s78,
-                  width: 1,
-                  color: appColor(context).appTheme.stroke)
-              .paddingSymmetric(horizontal: Insets.i20),
-          Expanded(
+            height: Sizes.s78,
+            /*  width: 1,
+                  color: appColor(context).appTheme.stroke */
+          ).paddingSymmetric(horizontal: Insets.i20),
+          /* Expanded(
               child: DescriptionLayoutCommon(
                   icon: eSvgAssets.receiptDiscount,
-                  title: appFonts.tax,
-                  subtitle: "${getTaxName(services!.taxId)}%"))
+                  title: translations!.tax,
+                  subtitle: "${services!.tax?.rate ?? 0}%")) */
         ]).paddingSymmetric(horizontal: Insets.i25),
         Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
             color: appColor(context).appTheme.stroke),
-
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(language(context, appFonts.description),
-              style: appCss.dmDenseMedium12
-                  .textColor(appColor(context).appTheme.lightText)),
-          const VSpace(Sizes.s6),
-          ReadMoreLayout(text: services!.description),
-
-          if (services!.metaDescription != null) const VSpace(Sizes.s15),
-          if (services!.metaDescription != null)
-            Text("\u2022 ${services!.metaDescription ?? ""}.",
-                style: appCss.dmDenseMedium13
-                    .textColor(appColor(context).appTheme.lightText))
-        ])
-            .paddingSymmetric(horizontal: Insets.i20)
-            .paddingSymmetric(vertical: Insets.i20)
+        if (services!.content != null)
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(language(context, "content" /* translations!.description */),
+                style: appCss.dmDenseMedium12
+                    .textColor(appColor(context).appTheme.lightText)),
+            const VSpace(Sizes.s6),
+            ReadMoreLayout(
+              text: services!.content ?? "",
+              isHtml: true,
+            ),
+            // if (services!.metaDescription != null) const VSpace(Sizes.s15),
+            // if (services!.metaDescription != null)
+            //   Text("${services!.metaDescription}",
+            //       style: appCss.dmDenseMedium13
+            //           .textColor(appColor(context).appTheme.lightText))
+          ]).paddingSymmetric(horizontal: Insets.i20, vertical: Insets.i20)
       ]).boxBorderExtension(context, isShadow: true);
     });
   }

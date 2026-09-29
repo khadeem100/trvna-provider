@@ -1,3 +1,4 @@
+/*
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,9 @@ class SelectTimeSheet extends StatelessWidget {
       return Consumer<TimeSlotProvider>(builder: (context, value, child) {
         return StatefulWrapper(
           onInit: () =>
-              Future.delayed(Durations.short3).then((_) => value.fetchData()),
+              Future.delayed(Durations.short3).then((_) {} */
+/*value.fetchData()*//*
+),
           child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.58,
               width: MediaQuery.of(context).size.width,
@@ -24,7 +27,7 @@ class SelectTimeSheet extends StatelessWidget {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(language(context, appFonts.selectTime),
+                      Text(language(context, translations!.selectTime),
                           style: appCss.dmDenseblack18
                               .textColor(appColor(context).appTheme.darkText)),
                       const Icon(CupertinoIcons.multiply)
@@ -38,8 +41,10 @@ class SelectTimeSheet extends StatelessWidget {
                           childCount: 13,
                           controller: value.controller1,
                           scrollHourIndex: value.scrollHourIndex,
-                          onSelectedItemChanged: (val) =>
-                              value.onHourChange(val),
+                          */
+/*onSelectedItemChanged: (val) =>
+                              value.onHourChange(val),*//*
+
                           builder: (context, index) {
                             return HourLayout(
                                 hours: index,
@@ -51,8 +56,10 @@ class SelectTimeSheet extends StatelessWidget {
                           childCount: 60,
                           controller: value.controller2,
                           scrollHourIndex: value.scrollMinIndex,
-                          onSelectedItemChanged: (val) =>
-                              value.onMinChange(val),
+                     */
+/*     onSelectedItemChanged: (val) =>
+                              value.onMinChange(val),*//*
+
                           builder: (context, index) {
                             return MyMinutes(
                                 index: index,
@@ -64,8 +71,10 @@ class SelectTimeSheet extends StatelessWidget {
                           childCount: 2,
                           controller: value.controller3,
                           scrollHourIndex: value.scrollDayIndex,
-                          onSelectedItemChanged: (val) =>
-                              value.onAmPmChange(val),
+                      */
+/*    onSelectedItemChanged: (val) =>
+                              value.onAmPmChange(val),*//*
+
                           builder: (context, index) {
                             if (index == 0) {
                               return AmPmLayout(
@@ -80,7 +89,7 @@ class SelectTimeSheet extends StatelessWidget {
                             }
                           })
                     ]).paddingSymmetric(horizontal: Insets.i20),
-                ButtonCommon(title: appFonts.addTime, onTap: onTap)
+                ButtonCommon(title: translations!.addTime, onTap: onTap)
                     .paddingSymmetric(horizontal: Insets.i20)
               ]))).bottomSheetExtension(context),
         );
@@ -88,3 +97,4 @@ class SelectTimeSheet extends StatelessWidget {
     });
   }
 }
+*/

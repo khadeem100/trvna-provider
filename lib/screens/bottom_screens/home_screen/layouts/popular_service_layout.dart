@@ -1,15 +1,9 @@
-import 'dart:ffi';
-
-import 'package:fixit_provider/utils/general_utils.dart';
-import 'package:flutter/cupertino.dart';
+﻿// ignore_for_file: prefer_typing_uninitialized_variables
 
 import '../../../../config.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-
-import '../../../../widgets/flutter_switch_common.dart';
 
 class FeaturedServicesLayout extends StatelessWidget {
-  final Services? data;
+  final data;
   final GestureTapCallback? onTap;
   final int? index;
   final ValueChanged<bool>? onToggle;
@@ -19,7 +13,7 @@ class FeaturedServicesLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final value = Provider.of<HomeProvider>(context, listen: true);
+    // final value = Provider.of<HomeProvider>(context, listen: true);
     return SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Column(children: [
@@ -27,7 +21,7 @@ class FeaturedServicesLayout extends StatelessWidget {
                       data!.media!.isNotEmpty &&
                       data!.media![0].originalUrl != null
                   ? CachedNetworkImage(
-                      imageUrl: data!.media![0].originalUrl!,
+                      imageUrl: data!.media!.first.originalUrl!,
                       imageBuilder: (context, imageProvider) => Container(
                           height: Sizes.s150,
                           width: MediaQuery.of(context).size.width,
@@ -62,12 +56,14 @@ class FeaturedServicesLayout extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(capitalizeFirstLetter(data!.title),
-                            style: appCss.dmDenseSemiBold15
-                                .textColor(appColor(context).appTheme.darkText)),
+                        child: TranslatedText(capitalizeFirstLetter(data?.title ?? ""),
+                            style: appCss.dmDenseSemiBold15.textColor(
+                                appColor(context).appTheme.darkText)),
                       ),
                       Text(
-                          "${getSymbol(context)}${currency(context).currencyVal * (data!.price!)}",
+                          symbolPosition
+                              ? "${getSymbol(context)}${(currency(context).currencyVal * (data!.price!)).toStringAsFixed(2)}"
+                              : "${(currency(context).currencyVal * (data!.price!)).toStringAsFixed(2)}${getSymbol(context)}",
                           style: appCss.dmDenseBold16
                               .textColor(appColor(context).appTheme.darkText))
                     ]),
@@ -79,9 +75,16 @@ class FeaturedServicesLayout extends StatelessWidget {
                       Row(children: [
                         if (data!.categories != null &&
                             data!.categories!.isNotEmpty)
-                          Text("\u2022 ${data!.categories![0].title}",
+                          Text(
+                            data!.categories!
+                                .map((cat) => "• ${cat.title}")
+                                .join('\n'),
+                            style: appCss.dmDenseMedium12.textColor(
+                                appColor(context).appTheme.lightText),
+                          ),
+                        /*  Text("0${data!.categories![0].title}",
                               style: appCss.dmDenseMedium12.textColor(
-                                  appColor(context).appTheme.lightText)),
+                                  appColor(context).appTheme.lightText)), */
                         if (data!.categories != null &&
                             data!.categories!.isNotEmpty)
                           VerticalDivider(
@@ -94,27 +97,27 @@ class FeaturedServicesLayout extends StatelessWidget {
                         SvgPicture.asset(eSvgAssets.receipt),
                         const HSpace(Sizes.s5),
                         Text(
-                            "${data!.bookingsCount ?? 0} ${language(context, appFonts.booked)}",
+                            "${data!.bookingsCount ?? 0} ${language(context, translations!.booked)}",
                             style: appCss.dmDenseMedium12.textColor(
                                 appColor(context).appTheme.lightText))
                       ]),
-                      if(data!.ratingCount != null)
-                      Row(children: [
-                        SvgPicture.asset(eSvgAssets.star),
-                        const HSpace(Sizes.s3),
-                        Text(
-                            data!.ratingCount != null
-                                ? data!.ratingCount.toString()
-                                : "0",
-                            style: appCss.dmDenseMedium13
-                                .textColor(appColor(context).appTheme.darkText))
-                      ])
+                      if (data!.ratingCount != null)
+                        Row(children: [
+                          SvgPicture.asset(eSvgAssets.star),
+                          const HSpace(Sizes.s3),
+                          Text(
+                              data!.ratingCount != null
+                                  ? data!.ratingCount.toString()
+                                  : "0",
+                              style: appCss.dmDenseMedium13.textColor(
+                                  appColor(context).appTheme.darkText))
+                        ])
                     ])),
                 const VSpace(Sizes.s10),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(language(context, appFonts.activeStatus),
+                      Text(language(context, translations!.activeStatus),
                           style: appCss.dmDenseMedium12
                               .textColor(appColor(context).appTheme.darkText)),
                       Theme(

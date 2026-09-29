@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+﻿import 'package:intl/intl.dart';
 
 import '../../../../config.dart';
 
@@ -13,21 +13,26 @@ class HistoryLayout extends StatelessWidget {
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
             width: MediaQuery.of(context).size.width / 1.6,
-            child: Text(data!.booking!.service!.title!,
+            child: TranslatedText(data?.booking?.service?.title ?? "",
                 overflow: TextOverflow.ellipsis,
                 style: appCss.dmDenseMedium14
                     .textColor(appColor(context).appTheme.darkText))),
         const VSpace(Sizes.s3),
-        Text(DateFormat("dd MMM, yyyy").format(DateTime.parse(data!.booking!.createdAt!)),
+        Text(
+            DateFormat("dd MMM, yyyy")
+                .format(DateTime.parse(data!.createdAt!.toString())),
             style: appCss.dmDenseRegular12
                 .textColor(appColor(context).appTheme.lightText))
       ]),
       Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        Text("${getSymbol(context)}${currency(context).currencyVal * data!.providerCommission!}",
+        Text(
+            symbolPosition
+                ? "${getSymbol(context)}${currency(context).currencyVal * data!.providerCommission!}"
+                : "${currency(context).currencyVal * data!.providerCommission!}${getSymbol(context)}",
             style: appCss.dmDenseSemiBold14
                 .textColor(appColor(context).appTheme.darkText)),
         const VSpace(Sizes.s3),
-      /*  Text(data["status"],
+        /*  Text(data["status"],
             style: appCss.dmDenseMedium12.textColor(data["status"] == "Credit"
                 ? appColor(context).appTheme.online
                 : appColor(context).appTheme.red))*/
@@ -39,3 +44,4 @@ class HistoryLayout extends StatelessWidget {
         .paddingOnly(bottom: Insets.i15);
   }
 }
+

@@ -8,7 +8,6 @@ class HomeShimmer extends StatelessWidget {
     return Scaffold(
         backgroundColor: isDark(context) ? Colors.black : Colors.white,
         body: ListView(children: [
-          const VSpace(Sizes.s30),
           const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,7 +53,9 @@ class HomeShimmer extends StatelessWidget {
                   crossAxisCount: 10,
                   mainAxisSpacing: 12,
                   crossAxisSpacing: 12,
-                  children: appArray.earningList.getRange(0, 4).toList()
+                  children: appArray.earningList
+                      .getRange(0, 4)
+                      .toList()
                       .asMap()
                       .entries
                       .map((e) => StaggeredGridTile.count(
@@ -94,7 +95,9 @@ class HomeShimmer extends StatelessWidget {
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const CommonWhiteShimmer(height: Sizes.s17, width: Sizes.s128),
               const VSpace(Sizes.s18),
-              Image.asset(isDark(context)?eImageAssets.graphDark : eImageAssets.grapghSkeleton)
+              Image.asset(isDark(context)
+                  ? eImageAssets.graphDark
+                  : eImageAssets.grapghSkeleton)
             ]).padding(horizontal: Sizes.s20, vertical: Sizes.s28)
           ]),
           const VSpace(Sizes.s26),

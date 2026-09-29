@@ -5,7 +5,7 @@ import '../../../../config.dart';
 class BookingServicemenListLayout extends StatelessWidget {
   final ServicemanModel? data;
   final List<ServicemanModel>? selList;
-  final int? index, list, selectedIndex;
+  final int? index;
   final GestureTapCallback? onTap, onTapRadio;
 
   const BookingServicemenListLayout(
@@ -14,8 +14,6 @@ class BookingServicemenListLayout extends StatelessWidget {
       this.selList,
       this.index,
       this.onTap,
-      this.list,
-      this.selectedIndex,
       this.onTapRadio});
 
   @override
@@ -41,59 +39,53 @@ class BookingServicemenListLayout extends StatelessWidget {
               Text(language(context, data!.name),
                   style: appCss.dmDenseMedium14
                       .textColor(appColor(context).appTheme.darkText)),
-              if(data!.reviewRatings != null)
-              VerticalDivider(
-                      width: 1,
-                      thickness: 1,
-                      color: appColor(context).appTheme.stroke,
-                      indent: 6,
-                      endIndent: 6)
-                  .paddingSymmetric(horizontal: Insets.i6),
-              if(data!.reviewRatings != null)
-              Row(children: [
-                SvgPicture.asset(eSvgAssets.star),
-                const HSpace(Sizes.s4),
-                Text(data!.reviewRatings ?? "0",
-                    style: appCss.dmDenseMedium13
-                        .textColor(appColor(context).appTheme.darkText))
-              ])
+              if (data!.reviewRatings != null)
+                VerticalDivider(
+                        width: 1,
+                        thickness: 1,
+                        color: appColor(context).appTheme.stroke,
+                        indent: 6,
+                        endIndent: 6)
+                    .paddingSymmetric(horizontal: Insets.i6),
+              if (data!.reviewRatings != null)
+                Row(children: [
+                  SvgPicture.asset(eSvgAssets.star),
+                  const HSpace(Sizes.s4),
+                  Text(data!.reviewRatings ?? "0",
+                      style: appCss.dmDenseMedium13
+                          .textColor(appColor(context).appTheme.darkText))
+                ])
             ]),
           ),
           const VSpace(Sizes.s4),
           Text(
               language(context,
-                  "${language(context, appFonts.memberSince)} ${DateFormat("yyyy").format(DateTime.parse(data!.createdAt!))}"),
+                  "${language(context, translations!.memberSince)} ${data!.createdAt == null ? "" : DateFormat("yyyy").format(DateTime.parse(data!.createdAt!))}"),
               style: appCss.dmDenseMedium12
                   .textColor(appColor(context).appTheme.lightText))
         ])
       ]),
-      list == null
+      selList == null
           ? Container()
-          : list! <= 1
-              ? CommonRadio(
-                      selectedIndex: selectedIndex,
-                      index: index,
-                      onTap: onTapRadio)
-                  .inkWell(onTap: onTap)
-              : Container(
-                      height: Sizes.s20,
-                      width: Sizes.s20,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
+          : Container(
+                  height: Sizes.s20,
+                  width: Sizes.s20,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: selList!.contains(data)
+                          ? appColor(context).appTheme.primary
+                          : appColor(context).appTheme.whiteBg,
+                      borderRadius: BorderRadius.circular(AppRadius.r4),
+                      border: Border.all(
                           color: selList!.contains(data)
-                              ? appColor(context).appTheme.primary
-                              : appColor(context).appTheme.whiteBg,
-                          borderRadius: BorderRadius.circular(AppRadius.r4),
-                          border: Border.all(
-                              color: selList!.contains(data)
-                                  ? appColor(context).appTheme.trans
-                                  : appColor(context).appTheme.stroke)),
-                      child: selList!.contains(data)
-                          ? Icon(Icons.check,
-                              size: Sizes.s15,
-                              color: appColor(context).appTheme.whiteBg)
-                          : null)
-                  .inkWell(onTap: onTap)
+                              ? appColor(context).appTheme.trans
+                              : appColor(context).appTheme.stroke)),
+                  child: selList!.contains(data)
+                      ? Icon(Icons.check,
+                          size: Sizes.s15,
+                          color: appColor(context).appTheme.whiteBg)
+                      : null)
+              .inkWell(onTap: onTap)
     ])
         .padding(horizontal: Insets.i15, vertical: Insets.i12)
         .boxBorderExtension(context,

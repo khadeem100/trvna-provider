@@ -1,4 +1,4 @@
-export '../../../../screens/auth_screens/splash_screen/layouts/rotation_animation_layout.dart';
+export 'splash_screen/layouts/rotation_animation_layout.dart';
 export '../../screens/auth_screens/splash_screen/splash_screen.dart';
 export '../../screens/auth_screens/splash_screen/layouts/splash_layout.dart';
 export '../../screens/auth_screens/intro_screen/intro_screen.dart';

@@ -1,4 +1,4 @@
-import '../../../../config.dart';
+﻿import '../../../../config.dart';
 
 class SelectListLayout extends StatelessWidget {
   final Services? data;
@@ -12,39 +12,49 @@ class SelectListLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Row(children: [
-    data!.media != null && data!.media!.isNotEmpty?    CachedNetworkImage(
-          imageUrl: data!.media![0].originalUrl!,
-          imageBuilder: (context, imageProvider) => Container(
-              height: Sizes.s40,
-              width: Sizes.s40,
-              decoration: ShapeDecoration(
-                  image:
-                      DecorationImage(fit: BoxFit.cover, image: imageProvider),
-                  shape: const SmoothRectangleBorder(
-                      borderRadius: SmoothBorderRadius.all(SmoothRadius(
-                          cornerRadius: AppRadius.r8, cornerSmoothing: 1))))),
-          placeholder: (context, url) => CommonCachedImage(
-              height: Sizes.s40,
-              width: Sizes.s40,
-              image: eImageAssets.noImageFound3,
-              radius: AppRadius.r8),
-          errorWidget: (context, url, error) =>  CommonCachedImage(
-              height: Sizes.s40,
-              width: Sizes.s40,
-              image: eImageAssets.noImageFound3,
-              radius: AppRadius.r8),
-        ): CommonCachedImage(
-            height: Sizes.s40,
-            width: Sizes.s40,
-            image: eImageAssets.noImageFound3,
-            radius: AppRadius.r8),
+        data!.media != null && data!.media!.isNotEmpty
+            ? CachedNetworkImage(
+                imageUrl: data?.media?.first.originalUrl ?? "",
+                imageBuilder: (context, imageProvider) => Container(
+                    height: Sizes.s40,
+                    width: Sizes.s40,
+                    decoration: ShapeDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover, image: imageProvider),
+                        shape: const SmoothRectangleBorder(
+                            borderRadius: SmoothBorderRadius.all(SmoothRadius(
+                                cornerRadius: AppRadius.r8,
+                                cornerSmoothing: 1))))),
+                placeholder: (context, url) => CommonCachedImage(
+                    height: Sizes.s40,
+                    width: Sizes.s40,
+                    image: eImageAssets.noImageFound3,
+                    radius: AppRadius.r8),
+                errorWidget: (context, url, error) => CommonCachedImage(
+                    height: Sizes.s40,
+                    width: Sizes.s40,
+                    image: eImageAssets.noImageFound3,
+                    radius: AppRadius.r8),
+              )
+            : CommonCachedImage(
+                height: Sizes.s40,
+                width: Sizes.s40,
+                image: eImageAssets.noImageFound3,
+                radius: AppRadius.r8),
         const HSpace(Sizes.s12),
-        Text(language(context, data!.title),
-            style: appCss.dmDenseMedium15
-                .textColor(appColor(context).appTheme.darkText))
-      ]),
+        SizedBox(
+          width: Sizes.s215,
+          child: TranslatedText(data?.title ?? "",
+              overflow: TextOverflow.ellipsis,
+              style: appCss.dmDenseMedium15
+                  .textColor(appColor(context).appTheme.darkText)),
+        )
+      ]).expanded(),
       CheckBoxCommon(
-          isCheck: selectedCategory!.where((element) => element.id == data!.id).isNotEmpty, onTap: onTap)
+          isCheck: selectedCategory!
+              .where((element) => element.id == data!.id)
+              .isNotEmpty,
+          onTap: onTap)
     ])
         .paddingSymmetric(vertical: Insets.i12, horizontal: Insets.i15)
         .boxBorderExtension(context,
@@ -52,3 +62,4 @@ class SelectListLayout extends StatelessWidget {
         .paddingOnly(bottom: Insets.i15);
   }
 }
+

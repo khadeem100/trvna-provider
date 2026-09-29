@@ -83,8 +83,8 @@ class ChartToolTip2 extends StatelessWidget {
               child:
                   Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                 Stack(alignment: Alignment.topCenter, children: [
-                  Image.asset(eImageAssets.chartBg,
-                      height: MediaQuery.of(context).size.height / 8,
+                  Image.asset(eImageAssets.base,
+                      height: MediaQuery.of(context).size.height / 11,
                       fit: BoxFit.fill),
                   RotatedBox(
                       quarterTurns: point.y >

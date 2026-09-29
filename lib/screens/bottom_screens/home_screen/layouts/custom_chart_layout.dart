@@ -1,6 +1,5 @@
-import 'dart:developer';
+// ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
-import 'package:flutter/gestures.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../config.dart';
@@ -11,6 +10,7 @@ class CustomChartLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(builder: (context, value, child) {
+      // log("value.totalW/eeklyRevenue:${value.totalWeeklyRevenue}");
       return Listener(
         onPointerMove: (event) {
           if (event.delta.dy != 0) {
@@ -22,55 +22,60 @@ class CustomChartLayout extends StatelessWidget {
         },
         child: SfCartesianChart(
             plotAreaBorderWidth: 0,
-
             enableAxisAnimation: true,
             enableSideBySideSeriesPlacement: false,
-            zoomPanBehavior: ZoomPanBehavior(enablePanning: true),
+            zoomPanBehavior: ZoomPanBehavior(
+              enablePanning: true,
+              enablePinching: false,
+              enableDoubleTapZooming: false,
+              enableSelectionZooming: false,
+            ),
+            trackballBehavior: TrackballBehavior(
+              enable: false,
+            ),
+            crosshairBehavior: CrosshairBehavior(
+              enable: false,
+            ),
             primaryXAxis: ChartSeriesClass().xAxis(context),
-            primaryYAxis: ChartSeriesClass().yAxis(
-                context,
-                value.selectedIndex,
-                value.totalWeeklyRevenue.roundToDouble(),
-                value.totalMonthlyRevenue.roundToDouble(),
-                value.totalYearlyRevenue.roundToDouble()),
+            primaryYAxis: NumericAxis(
+              majorGridLines: const MajorGridLines(width: 0),
+            ),
             tooltipBehavior: TooltipBehavior(
                 enable: true,
-                opacity: 0,
+                opacity: 1,
+                color: Colors.transparent,
+                activationMode: ActivationMode.singleTap,
+                shadowColor: Colors.transparent,
+                borderColor: Colors.transparent,
                 tooltipPosition: TooltipPosition.auto,
                 elevation: 0,
+                canShowMarker: false,
                 // Templating the tooltip
                 builder: (dynamic data, dynamic point, dynamic series,
                     int pointIndex, int seriesIndex) {
-                  if (pointIndex == 0 || pointIndex == 5) {
-                    return ChartToolTip(
-                        data: data,
-                        point: point,
-                        pointIndex: pointIndex,
-                        series: series,
-                        seriesIndex: seriesIndex);
-                  } else {
-                    return ChartToolTip2(
-                        data: data,
-                        point: point,
-                        pointIndex: pointIndex,
-                        series: series,
-                        seriesIndex: seriesIndex);
-                  }
+                  return ChartToolTip2(
+                      data: data,
+                      point: point,
+                      pointIndex: pointIndex,
+                      series: series,
+                      seriesIndex: seriesIndex);
                 }),
             series: <CartesianSeries<ChartData, String>>[
-              ChartSeriesClass()
-                  .chartSeries1(context, value.selectedIndex, value.isToolTip,
-                      onPointTap: (pointInteractionDetails) {
-                value.isToolTip = !value.isToolTip;
-                value.notifyListeners();
-              }),
+              ChartSeriesClass().chartSeries1(
+                context, value.selectedIndex, value.isToolTip,
+                //         onPointTap: (pointInteractionDetails) {
+                //   value.isToolTip = !value.isToolTip;
+                //   value.notifyListeners();
+                // }
+              ),
               if (!value.isToolTip)
-                ChartSeriesClass()
-                    .chartSeries2(context, value.selectedIndex, value.isToolTip,
-                        onPointTap: (pointInteractionDetails) {
-                  value.isToolTip = !value.isToolTip;
-                  value.notifyListeners();
-                })
+                ChartSeriesClass().chartSeries2(
+                  context, value.selectedIndex, value.isToolTip,
+                  //         onPointTap: (pointInteractionDetails) {
+                  //   value.isToolTip = !value.isToolTip;
+                  //   value.notifyListeners();
+                  // }
+                )
             ]),
       );
     });

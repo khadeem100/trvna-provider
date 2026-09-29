@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geolocator/geolocator.dart';
 
 class ServicemanShimmer extends StatelessWidget {
   const ServicemanShimmer({super.key});
@@ -15,8 +14,8 @@ class ServicemanShimmer extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: Sizes.s20),
         children: [
-          const VSpace(Sizes.s50),
-          const Row(
+          const VSpace(Sizes.s25),
+          /*   const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonSkeleton(
@@ -26,7 +25,7 @@ class ServicemanShimmer extends StatelessWidget {
                 CommonSkeleton(
                     height: Sizes.s40, width: Sizes.s40, isCircle: true),
               ]),
-          const VSpace(Sizes.s25),
+          const VSpace(Sizes.s25), */
           Container(
             padding: const EdgeInsets.all(Sizes.s15),
             decoration: ShapeDecoration(
@@ -77,13 +76,14 @@ class ServicemanShimmer extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: appColor(context).appTheme.whiteBg,
                                 shape: BoxShape.circle)),
-                        Stack(alignment: Alignment.center,
+                        Stack(
+                          alignment: Alignment.center,
                           children: [
                             CommonSkeleton(
                                 height: Sizes.s90,
                                 width: Sizes.s90,
                                 isCircle: true),
-                            Positioned(
+                            /* Positioned(
                               right: 0,
                               bottom: 10,
                               child: Stack(
@@ -93,7 +93,9 @@ class ServicemanShimmer extends StatelessWidget {
                                       height: Sizes.s32,
                                       width: Sizes.s32,
                                       decoration: BoxDecoration(
-                                          color: appColor(context).appTheme.whiteBg,
+                                          color: appColor(context)
+                                              .appTheme
+                                              .whiteBg,
                                           shape: BoxShape.circle)),
                                   Container(
                                       height: Sizes.s28,
@@ -105,14 +107,12 @@ class ServicemanShimmer extends StatelessWidget {
                                           shape: BoxShape.circle)),
                                 ],
                               ),
-                            ),
+                            ), */
                           ],
                         ).width(Sizes.s100)
-
                       ],
                     ),
                   ),
-
                 ],
               ).height(Sizes.s100),
               const VSpace(Sizes.s12),
@@ -127,7 +127,6 @@ class ServicemanShimmer extends StatelessWidget {
               const VSpace(Sizes.s14),
               Image.asset(eImageAssets.bulletDotted)
                   .paddingSymmetric(vertical: Insets.i12),
-
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -144,13 +143,10 @@ class ServicemanShimmer extends StatelessWidget {
                               CommonWhiteShimmer(
                                   height: Sizes.s17, width: Sizes.s58)
                             ])
-                      ]).paddingSymmetric(
-                      horizontal: Sizes.s15)
+                      ]).paddingSymmetric(horizontal: Sizes.s15)
                 ],
               ),
-
-const VSpace(Sizes.s20),
-
+              const VSpace(Sizes.s20),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const CommonSkeleton(
                     height: Sizes.s22, width: Sizes.s85, radius: 12),
@@ -159,16 +155,17 @@ const VSpace(Sizes.s20),
                   alignment: Alignment.center,
                   children: [
                     const CommonSkeleton(height: Sizes.s62, radius: 10),
-                     Column(
+                    Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IntrinsicHeight(
                             child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CommonWhiteShimmer(
                                           height: Sizes.s17, width: Sizes.s66),
@@ -176,9 +173,12 @@ const VSpace(Sizes.s20),
                                       CommonWhiteShimmer(
                                           height: Sizes.s17, width: Sizes.s105)
                                     ]),
-                                VerticalDivider(color: appColor(context).appTheme.stroke,),
+                                VerticalDivider(
+                                  color: appColor(context).appTheme.stroke,
+                                ),
                                 Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CommonWhiteShimmer(
                                           height: Sizes.s17, width: Sizes.s66),
@@ -189,21 +189,19 @@ const VSpace(Sizes.s20),
                               ],
                             ),
                           )
-                        ]).paddingSymmetric(
-                        horizontal: Sizes.s15)
+                        ]).paddingSymmetric(horizontal: Sizes.s15)
                   ],
                 ),
                 const VSpace(Sizes.s20),
-
                 const CommonSkeleton(height: Sizes.s14, width: Sizes.s125),
                 const VSpace(Sizes.s15),
-        Row(
-          children: List.generate(
-              3,
-                  (index) => const CommonSkeleton(
-                    height: Sizes.s32,width: Sizes.s78
-                  ).padding(right: Sizes.s10)),
-        ),
+                Row(
+                  children: List.generate(
+                      3,
+                      (index) => const CommonSkeleton(
+                              height: Sizes.s32, width: Sizes.s78)
+                          .padding(right: Sizes.s10)),
+                ),
                 const VSpace(Sizes.s20),
                 const CommonSkeleton(height: Sizes.s14, width: Sizes.s84),
                 const VSpace(Sizes.s9),
@@ -215,14 +213,14 @@ const VSpace(Sizes.s20),
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                           3,
-                              (index) => IntrinsicHeight(
+                          (index) => IntrinsicHeight(
                                 child: Row(
                                   children: [
                                     const CommonWhiteShimmer(
-                                    height: Sizes.s17,width: Sizes.s66
-                                                              ),
-                                    if(index !=2)
-                                    VerticalDivider().paddingSymmetric(horizontal: Sizes.s10)
+                                        height: Sizes.s17, width: Sizes.s66),
+                                    if (index != 2)
+                                      VerticalDivider().paddingSymmetric(
+                                          horizontal: Sizes.s10)
                                   ],
                                 ),
                               )),
@@ -236,7 +234,7 @@ const VSpace(Sizes.s20),
                 const VSpace(Sizes.s7),
                 const CommonSkeleton(height: Sizes.s14),
                 const VSpace(Sizes.s7),
-                const CommonSkeleton(height: Sizes.s14,width: Sizes.s185)
+                const CommonSkeleton(height: Sizes.s14, width: Sizes.s185)
               ]).width(MediaQuery.of(context).size.width)
             ]),
           ),

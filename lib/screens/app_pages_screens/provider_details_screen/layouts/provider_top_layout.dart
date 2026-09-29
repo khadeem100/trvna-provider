@@ -1,3 +1,5 @@
+﻿import 'dart:developer';
+
 import 'package:fixit_provider/screens/app_pages_screens/provider_details_screen/layouts/personal_detail_layout.dart';
 
 import '../../../../config.dart';
@@ -22,23 +24,20 @@ class ProviderTopLayout extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ProfilePicCommon(
-                  isProfile: false,
-                  imageUrl:
-                      provider!.media != null && provider!.media!.isNotEmpty
-                          ? provider!.media![0].originalUrl
-                          : null,
-                ).alignment(Alignment.center),
+                        isProfile: false,
+                        imageUrl: provider!.media != null &&
+                                provider!.media!.isNotEmpty
+                            ? provider!.media![0].originalUrl
+                            : null)
+                    .alignment(Alignment.center),
                 const VSpace(Sizes.s8),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Text(provider!.name!,
+                  Text(provider!.name ?? '',
                       style: appCss.dmDenseSemiBold14
                           .textColor(appColor(context).appTheme.darkText)),
                   const HSpace(Sizes.s6),
-                  SvgPicture.asset(
-                    eSvgAssets.tick,
-                    colorFilter: ColorFilter.mode(
-                        appColor(context).appTheme.darkText, BlendMode.srcIn),
-                  )
+                  SvgPicture.asset(eSvgAssets.verify,
+                      height: Sizes.s20, width: Sizes.s20)
                 ]),
                 const VSpace(Sizes.s6),
                 IntrinsicHeight(
@@ -63,7 +62,7 @@ class ProviderTopLayout extends StatelessWidget {
                                 endIndent: 3)
                             .paddingSymmetric(horizontal: Insets.i10),
                       Text(
-                          "${provider!.experienceDuration ?? 0} ${provider!.experienceInterval != null ?capitalizeFirstLetter(provider!.experienceInterval) : "Years"} ${appFonts.of} ${language(context, appFonts.experience)}",
+                          "${provider!.experienceDuration ?? 0} ${provider!.experienceInterval != null ? capitalizeFirstLetter(provider?.experienceInterval ?? "") : "Years"} ${translations!.of} ${language(context, translations!.experience)}",
                           style: appCss.dmDenseMedium13
                               .textColor(appColor(context).appTheme.darkText))
                     ])),
@@ -71,24 +70,26 @@ class ProviderTopLayout extends StatelessWidget {
                 const DottedLines(),
                 const VSpace(Sizes.s10),
                 ServicesDeliveredLayout(services: provider!.served ?? "0"),
-                Text(language(context, appFonts.detailsOfProvider),
+                Text(translations?.detailsOfProvider ?? "",
                         style: appCss.dmDenseMedium12
                             .textColor(appColor(context).appTheme.lightText))
                     .paddingOnly(top: Insets.i15, bottom: Insets.i8),
                 if (provider!.description != null)
-                  Text(provider!.description!,
+                  TranslatedText(provider!.description ?? "",
                       style: appCss.dmDenseMedium14
                           .textColor(appColor(context).appTheme.darkText)),
-                Text(language(context, appFonts.personalInfo),
+                Text(translations?.personalInfo ?? "",
                         style: appCss.dmDenseMedium12
                             .textColor(appColor(context).appTheme.lightText))
                     .paddingOnly(top: Insets.i15, bottom: Insets.i8),
                 PersonalDetailLayout(
-                  email: provider!.email!,
-                  phone: "${provider!.code} ${provider!.phone!}",
-                  knownLanguage: provider!.knownLanguages,
-                )
+                    email: provider!.email!,
+                    phone:
+                        "+${provider!.code} ${provider!.phone/*!.replaceRange(5, provider!.phone!.length, "*")*/}",
+                    knownLanguage: provider!.knownLanguages)
               ]).paddingAll(Insets.i20));
     });
   }
 }
+
+

@@ -17,8 +17,7 @@ class HistoryBody extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               HeadingRowCommon(
-
-                  title: appFonts.history,
+                  title: translations!.history,
                   isViewAllShow: commissionList!.histories!.length >= 10,
                   onTap: () =>
                       route.pushNamed(context, routeName.earningHistory)),
@@ -29,9 +28,7 @@ class HistoryBody extends StatelessWidget {
                     .toList()
                     .asMap()
                     .entries
-                    .map((e) => HistoryLayout(
-                          data: e.value,
-                        )),
+                    .map((e) => HistoryLayout(data: e.value)),
               if (commissionList!.histories!.length <= 10)
                 ...commissionList!.histories!
                     .asMap()

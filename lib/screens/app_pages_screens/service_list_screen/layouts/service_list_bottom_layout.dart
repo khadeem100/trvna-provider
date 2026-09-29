@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import '../../../../common_shimmer/service_shimmer.dart';
 import '../../../../config.dart';
 
 class ServiceListBottomLayout extends StatelessWidget {
@@ -10,8 +11,7 @@ class ServiceListBottomLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = Provider.of<ServiceListProvider>(context);
-    final userApi = Provider.of<UserDataApiProvider>(context);
-log("value.serviceList:${value.serviceList.length}");
+
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -25,23 +25,28 @@ log("value.serviceList:${value.serviceList.length}");
                         bottom: BorderSide(
                             color: appColor(context).appTheme.stroke,
                             width: 2.5))),
-          if (categoryList[value.selectedIndex].hasSubCategories!.isNotEmpty)
-            const VSpace(Sizes.s15),
-          if(value.serviceList.isEmpty)
-            const CommonEmpty(),
-          if(value.serviceList.isNotEmpty)
-          ...value.serviceList
-              .asMap()
-              .entries
-              .map((e) => FeaturedServicesLayout(
-                    data: e.value,
-                    onTap: () => route.pushNamed(
-                        context, routeName.serviceDetails,
-                        arg: {"detail": e.value.id}),
-                    onToggle: (val) => value.updateActiveStatusService(
-                        context, e.value.id, val, e.key),
-                  ).paddingSymmetric(horizontal: Insets.i20))
-
+          // if (categoryList[value.selectedIndex].hasSubCategories!.isNotEmpty)
+          const VSpace(Sizes.s15),
+          value.widget1Opacity == 0.0
+              ? const ServicesShimmer(count: 3).padding(horizontal: Sizes.s20)
+              : value.serviceList.isEmpty
+                  ? const CommonEmpty()
+                  : ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return FeaturedServicesLayout(
+                          data: value.serviceList[index],
+                          onTap: () {
+                            route.pushNamed(context, routeName.serviceDetails,
+                                arg: value.serviceList[index]);
+                          },
+                          onToggle: (val) => value.updateActiveStatusService(
+                              context, value.serviceList[index].id, val, index),
+                        ).paddingSymmetric(horizontal: Insets.i20);
+                      },
+                      itemCount: value.serviceList.length,
+                    )
         ]);
   }
 }

@@ -9,7 +9,7 @@ class ServiceDetailShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDark(context)?Colors.black:Colors.white,
+      backgroundColor: isDark(context) ? Colors.black : Colors.white,
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -32,9 +32,11 @@ class ServiceDetailShimmer extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               const CommonSkeleton(
                   width: Sizes.s60, height: Sizes.s60, radius: 8),
-              const CommonSkeleton(width: Sizes.s60, height: Sizes.s60, radius: 8)
+              const CommonSkeleton(
+                      width: Sizes.s60, height: Sizes.s60, radius: 8)
                   .paddingSymmetric(horizontal: Sizes.s15),
-              const CommonSkeleton(width: Sizes.s60, height: Sizes.s60, radius: 8)
+              const CommonSkeleton(
+                  width: Sizes.s60, height: Sizes.s60, radius: 8)
             ]),
             const VSpace(Sizes.s18),
             Stack(alignment: Alignment.center, children: [
@@ -63,7 +65,9 @@ class ServiceDetailShimmer extends StatelessWidget {
           ])
               .marginSymmetric(horizontal: Sizes.s15)
               .paddingOnly(bottom: Sizes.s15)
-              .backgroundColor(isDark(context) ?Colors.black:appColor(context).appTheme.whiteColor)
+              .backgroundColor(isDark(context)
+                  ? Colors.black
+                  : appColor(context).appTheme.whiteColor)
         ],
       ),
     );

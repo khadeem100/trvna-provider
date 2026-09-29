@@ -9,7 +9,7 @@ class RadioLayout extends StatelessWidget {
     return SafeArea(
         child: SingleChildScrollView(
             child: Column(children: [
-      ...appArray.languageList.asMap().entries.map((e) {
+      ...languageCtrl.languageList.asMap().entries.map((e) {
         return Column(children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
@@ -19,9 +19,9 @@ class RadioLayout extends StatelessWidget {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage(e.value["icon"].toString())))),
+                          image: NetworkImage(e.value.flag.toString())))),
               const HSpace(Sizes.s12),
-              Text(language(context, e.value['title']),
+              Text(language(context, e.value.name),
                   style: appCss.dmDenseRegular14
                       .textColor(appColor(context).appTheme.darkText))
             ]),
@@ -31,27 +31,29 @@ class RadioLayout extends StatelessWidget {
                     height: 22,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: appColor(context).appTheme.primary.withOpacity(0.18)),
-                    child:  Icon(Icons.circle,
+                        color: appColor(context)
+                            .appTheme
+                            .primary
+                            .withOpacity(0.18)),
+                    child: Icon(Icons.circle,
                         color: appColor(context).appTheme.primary, size: 13))
                 : Container(
                     width: 22,
                     height: 22,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: appColor(context).appTheme.stroke)))
+                        border: Border.all(
+                            color: appColor(context).appTheme.stroke)))
           ]).paddingSymmetric(vertical: Insets.i12),
           Divider(color: appColor(context).appTheme.fieldCardBg, height: 0)
         ])
             .paddingSymmetric(horizontal: Insets.i15)
             .width(MediaQuery.of(context).size.width)
-            .inkWell(
-                onTap: () =>
-                    languageCtrl.onRadioChange(e.key,e.value));
-      }).toList()
-    ]))).decorated(color: appColor(context).appTheme.whiteBg,
-        border: Border.all(
-            color: appColor(context).appTheme.fieldCardBg),
+            .inkWell(onTap: () => languageCtrl.setIndex(e.key));
+      })
+    ]))).decorated(
+        color: appColor(context).appTheme.whiteBg,
+        border: Border.all(color: appColor(context).appTheme.fieldCardBg),
         borderRadius: BorderRadius.circular(AppRadius.r12),
         boxShadow: [
           BoxShadow(

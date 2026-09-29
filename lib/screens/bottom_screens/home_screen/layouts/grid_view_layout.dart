@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: unused_local_variable
 
 import '../../../../config.dart';
-import 'dart:math';
 
 class GridViewLayout extends StatelessWidget {
   final Animation? animation;
@@ -20,8 +19,10 @@ class GridViewLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //log("Data::${data['price']}");
+    final userApi = Provider.of<UserDataApiProvider>(context, listen: false);
     return Container(
-            height: isHeight ? Sizes.s130 : Sizes.s108,
+            height: isHeight ? Sizes.s130 : Sizes.s110,
             decoration: ShapeDecoration(
                 color: appColor(context).appTheme.fieldCardBg,
                 image: DecorationImage(
@@ -42,7 +43,10 @@ class GridViewLayout extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("${data["title"] == appFonts.totalEarning ? "${getSymbol(context)}" : ""}${data["price"]}",
+                        Text(
+                            symbolPosition
+                                ? "${data["title"] == translations!.totalEarning ? "${getSymbol(context)}" : ""}${data["price"]}"
+                                : "${data["price"]}${data["title"] == translations!.totalEarning ? "${getSymbol(context)}" : ""}",
                             style: appCss.dmDenseBold16
                                 .textColor(appColor(context).appTheme.primary)),
                         SvgPicture.asset(eSvgAssets.anchorArrowRight,

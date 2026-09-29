@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
 import '../../../../config.dart';
 
@@ -25,10 +26,24 @@ class HomeAppBar extends StatelessWidget {
                 image: eImageAssets.noImageFound3,
                 isCircle: true),
         const HSpace(Sizes.s10),
-        Text(userModel != null ?userModel!.name! : language(context, appFonts.helloThere),
+        Text(
+            userModel != null
+                ? userModel!.name!
+                : language(context, translations!.helloThere),
             style: appCss.dmDenseBold14
-                .textColor(appColor(context).appTheme.darkText))
-      ]),
+                .textColor(appColor(context).appTheme.darkText)),
+        if (userModel?.isVerified == 1)
+          SvgPicture.asset(
+            eSvgAssets.verify,
+            fit: BoxFit.scaleDown,
+            height: 15,
+          ).padding(left: 5)
+      ]).inkWell(onTap: () {
+        final value = Provider.of<DashboardProvider>(context, listen: false);
+        value.selectIndex = 3;
+        value.notifyListeners();
+/*         route.pushNamed(context, routeName.profileDetails); */
+      }),
       Row(children: [
         CommonArrow(arrow: eSvgAssets.chat).inkWell(
             onTap: () => route.pushNamed(context, routeName.chatHistory)),

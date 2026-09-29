@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import '../../../../config.dart';
 
 class ChartSeriesClass {
@@ -8,7 +6,6 @@ class ChartSeriesClass {
           context, selectedIndex, isToolTip,
           {Function(ChartPointDetails)? onPointTap}) =>
       ColumnSeries<ChartData, String>(
-
           dataSource: selectedIndex == 0
               ? appArray.weekData
               : selectedIndex == 1
@@ -31,11 +28,12 @@ class ChartSeriesClass {
           onPointTap: onPointTap,
           selectionBehavior: SelectionBehavior(
               enable: true,
+              unselectedOpacity: 1,
+              selectedOpacity: 1,
               unselectedColor: appColor(context).appTheme.fieldCardBg,
-              selectedBorderColor:
-                  appColor(context).appTheme.primary.withOpacity(0.10),
-              selectedBorderWidth: 15,
-              selectedColor: appColor(context).appTheme.primary),
+              selectedBorderColor: Colors.transparent,
+              selectedBorderWidth: 0,
+              selectedColor: appColor(context).appTheme.fieldCardBg),
           color: appColor(context).appTheme.fieldCardBg);
 
   CartesianSeries<ChartData, String> chartSeries2(
@@ -63,10 +61,11 @@ class ChartSeriesClass {
           isTrackVisible: false,
           selectionBehavior: SelectionBehavior(
               enable: true,
-              unselectedColor: appColor(context).appTheme.fieldCardBg,
-              selectedBorderColor:
-                  appColor(context).appTheme.primary.withOpacity(0.10),
-              selectedBorderWidth: 15,
+              unselectedOpacity: 1,
+              selectedOpacity: 1,
+              unselectedColor: appColor(context).appTheme.primary,
+              selectedBorderColor: Colors.transparent,
+              selectedBorderWidth: 0,
               selectedColor: appColor(context).appTheme.primary),
           color: appColor(context).appTheme.primary);
 
@@ -79,9 +78,9 @@ class ChartSeriesClass {
       visibleMaximum: 5,*/
       labelStyle: appCss.dmDenseMedium12
           .textColor(appColor(context).appTheme.lightText),
+      /*,
       axisLine: AxisLine(
-          dashArray: <double>[3.0, 2.0],
-          color: appColor(context).appTheme.stroke));
+          color: appColor(context).appTheme.stroke)*/);
 
   NumericAxis yAxis(context, selectedIndex, totalWeeklyRevenue,
           totalMonthlyRevenue, totalYearlyRevenue) =>
@@ -95,12 +94,11 @@ class ChartSeriesClass {
           interval: 100,
           labelStyle: appCss.dmDenseMedium12
               .textColor(appColor(context).appTheme.lightText),
-          labelFormat: '{value}k',
+          labelFormat: '{value}',
           majorGridLines: const MajorGridLines(width: 0),
           minorGridLines: const MinorGridLines(width: 0),
           majorTickLines: const MajorTickLines(width: 0),
           minorTickLines: const MinorTickLines(width: 0),
           axisLine: AxisLine(
-              dashArray: <double>[3.0, 2.0],
               color: appColor(context).appTheme.stroke));
 }

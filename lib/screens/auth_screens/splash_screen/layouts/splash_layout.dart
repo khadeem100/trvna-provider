@@ -10,7 +10,7 @@ class SplashLayout extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            /*  Container(
                 child: AnimatedContainer(
                     alignment: Alignment.center,
                     height: Sizes.s10,
@@ -19,9 +19,9 @@ class SplashLayout extends StatelessWidget {
                     child: Text("ft",
                         style: appCss.dmDenseMedium10.textColor(const Color(0xffFFFFFF)))
                 ).decorated(
-                    color: const Color(0xff5465FF),
+                    color: const appColor(context).appTheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(AppRadius.r14)))
-            ),
+            ), */
           ],
         ),
       ),

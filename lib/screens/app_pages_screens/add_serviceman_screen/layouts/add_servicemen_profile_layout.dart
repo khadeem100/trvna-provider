@@ -13,19 +13,22 @@ class AddServicemenProfileLayout extends StatelessWidget {
               height: Sizes.s66, width: MediaQuery.of(context).size.width)
           .paddingOnly(bottom: Insets.i45, right: Insets.i20, left: Insets.i20),
       Stack(alignment: Alignment.bottomRight, children: [
-        value.servicemanModel != null
-            ? value.servicemanModel!.media == null &&
-                    value.servicemanModel!.media!.isEmpty
+        value.profileFile != null
+            ? ServicemenProfileLayout(
+                isFilePath: true, image: value.profileFile!.path)
+            : value.servicemanModel != null &&
+                    value.servicemanModel!.media != null &&
+                    value.servicemanModel!.media!.isNotEmpty
                 ? ServicemenProfileLayout(
                     isFilePath: false,
-                    color: value.colorCollection[Random().nextInt(9)])
+                    image: value.servicemanModel!.media![0].originalUrl!)
                 : ServicemenProfileLayout(
                     isFilePath: false,
-                    image: value.servicemanModel != null &&
-                            value.servicemanModel!.media!.isNotEmpty
-                        ? value.servicemanModel!.media![0].originalUrl!
-                        : null)
-            :  ServicemenProfileLayout(isFilePath:value.profileFile != null? true:false),
+                    color: value.colorCollection.isNotEmpty
+                        ? value.colorCollection[
+                            Random().nextInt(value.colorCollection.length)]
+                        : Colors.grey,
+                  ),
         SizedBox(
                 child: SvgPicture.asset(
                         value.profileFile != null

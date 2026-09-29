@@ -73,7 +73,7 @@ export '../../screens/app_pages_screens/id_verification_screen/id_verification_s
 export '../../screens/app_pages_screens/add_serviceman_screen/layouts/selection_option_layout.dart';
 export '../../screens/app_pages_screens/id_verification_screen/layouts/document_layout.dart';
 export '../../screens/app_pages_screens/time_slot_screen/time_slot_screen.dart';
-// terms_condition_sheet.dart was not shipped in the Fixit package; app_setting_layout covers this UI.
+export 'app_setting_screen/layouts/terms_condition_sheet.dart';
 export '../../screens/app_pages_screens/time_slot_screen/layouts/start_slot_layout.dart';
 export '../../screens/app_pages_screens/time_slot_screen/layouts/all_time_slot_layout.dart';
 export '../../screens/app_pages_screens/time_slot_screen/layouts/select_time_sheet.dart';

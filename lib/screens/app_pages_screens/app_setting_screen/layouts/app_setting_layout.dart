@@ -1,13 +1,13 @@
 import '../../../../config.dart';
 
-
 class AppSettingLayout extends StatelessWidget {
   const AppSettingLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
     final settingCtrl = Provider.of<AppSettingProvider>(context, listen: true);
-    return Consumer<ThemeService>(builder: (themeContext, theme, child) {
+    return Consumer2<LanguageProvider, ThemeService>(
+        builder: (themeContext, lang, theme, child) {
       return SafeArea(
           child: SingleChildScrollView(
               child: Column(children: [
@@ -15,14 +15,17 @@ class AppSettingLayout extends StatelessWidget {
           return Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Row(children: [
-                CommonArrow(
-                    arrow: e.value['icon'].toString()),
+                CommonArrow(arrow: e.value['icon'].toString()),
                 const HSpace(Sizes.s12),
-                e.key == 0 ?  Text(language(context,appArray.themeModeList[themeIndex(context)]),
-                    style: appCss.dmDenseRegular14
-                        .textColor(appColor(context).appTheme.darkText)) :   Text(language(context, e.value['title']),
-                    style: appCss.dmDenseRegular14
-                        .textColor(appColor(context).appTheme.darkText))
+                e.key == 0
+                    ? Text(
+                        language(context,
+                            appArray.themeModeList[themeIndex(context)]),
+                        style: appCss.dmDenseRegular14
+                            .textColor(appColor(context).appTheme.darkText))
+                    : Text(language(context, e.value['title']),
+                        style: appCss.dmDenseRegular14
+                            .textColor(appColor(context).appTheme.darkText))
               ]),
               if (e.key == 1)
                 Consumer<LanguageProvider>(
@@ -33,17 +36,20 @@ class AppSettingLayout extends StatelessWidget {
                           width: Sizes.s32,
                           height: Sizes.s20,
                           toggleSize: Sizes.s12,
-                          value:settingCtrl.isNotification ,
+                          value: settingCtrl.isNotification,
                           borderRadius: 15,
                           padding: 3,
                           toggleColor: appColor(context).appTheme.whiteBg,
-                          inactiveToggleColor: appColor(context).appTheme.lightText,
+                          inactiveToggleColor:
+                              appColor(context).appTheme.lightText,
                           activeColor: appColor(context).appTheme.primary,
                           inactiveColor: appColor(context).appTheme.stroke,
-                          onToggle: (val) =>  settingCtrl.onNotification(val,context)));
+                          onToggle: (val) =>
+                              settingCtrl.onNotification(val, context)));
                 }),
               if (e.key == 0 || e.key == 2 || e.key == 3 || e.key == 4)
-                SvgPicture.asset(rtl(context) ? eSvgAssets.arrowLeft : eSvgAssets.arrowRight,
+                SvgPicture.asset(
+                    rtl(context) ? eSvgAssets.arrowLeft : eSvgAssets.arrowRight,
                     colorFilter: ColorFilter.mode(
                         appColor(context).appTheme.lightText, BlendMode.srcIn))
             ]).paddingSymmetric(vertical: Insets.i12),

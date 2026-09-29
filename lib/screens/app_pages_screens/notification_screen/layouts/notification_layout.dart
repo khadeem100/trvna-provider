@@ -1,4 +1,4 @@
-import 'dart:developer';
+﻿import 'dart:developer';
 
 import 'package:intl/intl.dart';
 
@@ -13,7 +13,6 @@ class NotificationLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-
       children: [
         Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,65 +28,73 @@ class NotificationLayout extends StatelessWidget {
                             ? appColor(context).appTheme.fieldCardBg
                             : appColor(context).appTheme.whiteBg,
                         shape: BoxShape.circle)*/
-                CachedNetworkImage(
-                    imageUrl: data!.data!.thumbnail!,
-                    imageBuilder: (context, imageProvider) => Image(
-                      image: imageProvider,
-                      fit: BoxFit.fill,
-                      height: Sizes.s18,
-                    ).paddingAll(Insets.i7).decorated(
-                        color:  data!.readAt != null
-                            ? appColor(context).appTheme.whiteBg
-                            : appColor(context).appTheme.fieldCardBg,
-                        shape: BoxShape.circle),
-                    errorWidget: (context, url, error) => Image.asset(
-                      eImageAssets.noImageFound1,
-                      height: Sizes.s18,
-                    ).paddingAll(Insets.i7).decorated(
+                    CachedNetworkImage(
+                        imageUrl: data?.data?.thumbnail ?? "",
+                        imageBuilder: (context, imageProvider) => Image(
+                              image: imageProvider,
+                              fit: BoxFit.fill,
+                              height: Sizes.s18,
+                            ).paddingAll(Insets.i7).decorated(
+                                color: data!.readAt != null
+                                    ? appColor(context).appTheme.whiteBg
+                                    : appColor(context).appTheme.fieldCardBg,
+                                shape: BoxShape.circle),
+                        errorWidget: (context, url, error) => Image.asset(
+                              eImageAssets.noImageFound1,
+                              height: Sizes.s18,
+                            ).paddingAll(Insets.i7).decorated(
+                                color: data!.readAt != null
+                                    ? appColor(context).appTheme.whiteBg
+                                    : appColor(context).appTheme.fieldCardBg,
+                                shape: BoxShape.circle))
+                    : Image.asset(
+                        eImageAssets.noImageFound1,
+                        height: Sizes.s18,
+                      ).paddingAll(Insets.i7).decorated(
                         color: data!.readAt != null
                             ? appColor(context).appTheme.whiteBg
                             : appColor(context).appTheme.fieldCardBg,
-                        shape: BoxShape.circle)
-                )
-                    : Image.asset(
-                  eImageAssets.noImageFound1,
-                  height: Sizes.s18,
-                ).paddingAll(Insets.i7).decorated(
-                    color:  data!.readAt != null
-                        ? appColor(context).appTheme.whiteBg
-                        : appColor(context).appTheme.fieldCardBg,
-                    shape: BoxShape.circle),
+                        shape: BoxShape.circle),
                 const HSpace(Sizes.s12),
-                Text(data!.data!.title!,
-                    style: appCss.dmDenseMedium14.textColor(data!.readAt != null
-                        ? appColor(context).appTheme.lightText
-                        : appColor(context).appTheme.darkText)),
-
-              ]),
+                Flexible(
+                  child: TranslatedText(data?.data?.title ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
+                      style: appCss.dmDenseMedium14.textColor(
+                          data!.readAt != null
+                              ? appColor(context).appTheme.lightText
+                              : appColor(context).appTheme.darkText)),
+                ),
+              ]).expanded(),
               Text(checkCurrentDateShowMin(data!.createdAt!).toString(),
                   style: appCss.dmDenseRegular12
                       .textColor(appColor(context).appTheme.lightText))
-            ])
-        ,
-        Text(data!.data!.message ?? "",
-            style: appCss.dmDenseRegular12.textColor(
-                data!.readAt != null
+            ]),
+        TranslatedText(data!.data!.message ?? "",
+                style: appCss.dmDenseRegular12.textColor(data!.readAt != null
                     ? appColor(context).appTheme.lightText
-                    : appColor(context).appTheme.darkText)).paddingOnly(left: rtl(context) ?0 :Insets.i42,right: rtl(context) ?Insets.i42 :0),
+                    : appColor(context).appTheme.darkText))
+            .paddingOnly(
+                left: rtl(context) ? 0 : Insets.i42,
+                right: rtl(context) ? Insets.i42 : 0),
         if (data!.data!.image != null)
           Image.network(data!.data!.image!, height: Sizes.s53)
               .paddingOnly(top: Insets.i10)
-              .decorated(
-              borderRadius: BorderRadius.circular(AppRadius.r4)).paddingOnly(left: rtl(context) ? 0 :Insets.i42,right: rtl(context) ?Insets.i42 :0)
+              .decorated(borderRadius: BorderRadius.circular(AppRadius.r4))
+              .paddingOnly(
+                  left: rtl(context) ? 0 : Insets.i42,
+                  right: rtl(context) ? Insets.i42 : 0)
       ],
-    ).paddingAll(Insets.i12)
+    )
+        .paddingAll(Insets.i12)
         .boxBorderExtension(context,
-        bColor: appColor(context).appTheme.fieldCardBg,
-        color: data!.readAt != null
-            ? appColor(context).appTheme.whiteBg
-            : appColor(context).appTheme.fieldCardBg,
-        isShadow: data!.readAt != null ? true : false,
-        radius: AppRadius.r12)
+            bColor: appColor(context).appTheme.fieldCardBg,
+            color: data!.readAt != null
+                ? appColor(context).appTheme.whiteBg
+                : appColor(context).appTheme.fieldCardBg,
+            isShadow: data!.readAt != null ? true : false,
+            radius: AppRadius.r12)
         .paddingOnly(bottom: Insets.i15)
         .inkWell(onTap: onTap);
   }
@@ -114,3 +121,4 @@ checkCurrentDateShowMin(date) {
     }
   }
 }
+
