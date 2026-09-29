@@ -82,7 +82,7 @@ jobs:
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID" \
             2>&1 | tee "$RUNNER_TEMP/altool.log"
           code=${PIPESTATUS[0]}
-          if grep -q "UPLOAD FAILED" "$RUNNER_TEMP/altool.log"; then
+          if grep -E -q "UPLOAD FAILED|Failed to upload|must be higher than the previously uploaded version" "$RUNNER_TEMP/altool.log"; then
             exit 1
           fi
           exit "$code"
