@@ -37,9 +37,7 @@ class BookingServicemenListScreen extends StatelessWidget {
                               children: value.searchList
                                   .asMap()
                                   .entries
-                                  .map((e) => BookingServicemenListLayout(
-                                          list: value.required,
-                                          selectedIndex: value.selectedIndex,
+                                  .map<Widget>((e) => BookingServicemenListLayout(
                                           onTapRadio: () =>
                                               value.onTapRadio(e.key, e.value),
                                           data: e.value,
@@ -55,7 +53,17 @@ class BookingServicemenListScreen extends StatelessWidget {
                               children: servicemanList
                                   .asMap()
                                   .entries
-                                  .map((e) => BookingServicemenListLayout(list: value.required, selectedIndex: value.selectedIndex, onTapRadio: () => value.onTapRadio(e.key, e.value), data: e.value, selList: value.selectService, index: e.key, onTap: () => value.onTapRadio(e.key, e.value)).inkWell(onTap: () => value.onTapRadio(e.key, e.value)))
+                                  .map<Widget>((e) => BookingServicemenListLayout(
+                                          onTapRadio: () =>
+                                              value.onTapRadio(e.key, e.value),
+                                          data: e.value,
+                                          selList: value.selectService,
+                                          index: e.key,
+                                          onTap: () =>
+                                              value.onTapRadio(e.key, e.value))
+                                      .inkWell(
+                                          onTap: () =>
+                                              value.onTapRadio(e.key, e.value)))
                                   .toList())
                     ]).padding(
                                 horizontal: Insets.i20,
